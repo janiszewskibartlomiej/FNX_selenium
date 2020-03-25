@@ -1,4 +1,4 @@
-## Selenium WebDriver with Python + Unittest + Python
+## Selenium WebDriver with Python + Unittest + Pytest
 
 ***
 
