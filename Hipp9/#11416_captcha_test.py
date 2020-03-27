@@ -32,11 +32,12 @@ class CaptchaTestCase(unittest.TestCase):
     """
 
     def setUp(self):
-        self.driver = webdriver.Firefox()
-        # options = webdriver.ChromeOptions()
-        # options.add_argument('--ignore-certificate-errors')
-        # self.driver = webdriver.Chrome('C:/Users/janis/PycharmProjects/FNX_selenium/Driver/chromedriver.exe',
-        #                                chrome_options=options)
+        # self.driver  = webdriver.Remote(desired_capabilities=webdriver.DesiredCapabilities.ANDROID)
+        # self.driver = webdriver.Firefox()
+        options = webdriver.ChromeOptions()
+        options.add_argument('--ignore-certificate-errors')
+        self.driver = webdriver.Chrome('C:/Users/janis/PycharmProjects/FNX_selenium/Driver/chromedriver',
+                                       chrome_options=options)
         self.driver.fullscreen_window()
         # self.driver.maximize_window()
         self.driver.implicitly_wait(30)
@@ -49,7 +50,7 @@ class CaptchaTestCase(unittest.TestCase):
         # start browser and got to hipp
         driver = self.driver
         driver.get(f'https://{Login.HIPP_U}:{Password.HIPP_P}@{Url.HIPP_DEV}')
-
+        print(driver.title)
         # click on icon account
         try:
             driver.find_element_by_xpath("//span[contains(@class,'kkicon kkicon-account')]").click()
@@ -108,8 +109,8 @@ class CaptchaTestCase(unittest.TestCase):
         time.sleep(2)
         # check is captcha visible
         try:
-            element = WebDriverWait(driver, 10).until(
-                EC.visibility_of_element_located((By.XPATH, "//div[@class='g-recaptcha]'")))
+            # element = WebDriverWait(driver, 10).until(
+            #     EC.visibility_of_element_located((By.XPATH, "//div[@class='g-recaptcha]'")))
             # print(driver.find_element_by_xpath("//div[@class='g-recaptcha']"))
             self.assertEqual("reCAPTCHA", driver.find_element_by_xpath("//div[@class='g-recaptcha']"))
         except AssertionError as e:
