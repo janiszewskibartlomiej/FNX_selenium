@@ -1,8 +1,6 @@
 .idea
 /auth
-/Scratches_script
-__init__.py
-geckodriver.exe
 /venv/
 /Driver/
 /Hipp9/
+/Scratches_script/
