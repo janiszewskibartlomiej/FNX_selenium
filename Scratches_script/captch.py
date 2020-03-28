@@ -10,6 +10,7 @@ import unittest, time, re
 
 from Auth import Url, Login, Password
 
+
 BY_FB_LOGIN = expected_conditions.presence_of_element_located((By.CLASS_NAME, "loginBtn--facebook"))
 
 
