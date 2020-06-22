@@ -29,9 +29,9 @@ FireFox driver [geckodriver.exe] importand info:
 
 ### Test Scenario TS01: Check Login Functionality
     
-
+TS01_TC001 <a name="test_TS01_TC001_successful_login_with_username"></a>
 ```yaml
-test_TS01_TC001_successful_login_with_username: <a name="test_TS01_TC001_successful_login_with_username"></a>
+test_TS01_TC001_successful_login_with_username: 
 
 Steps:
     1. Go to login page
