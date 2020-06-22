@@ -19,7 +19,7 @@ Chrome driver importand info:
     
     example: 
     
-    chrome_path = 'C:/Users/janis/PycharmProjects/hipp9/Page/Tests/Drivers/chromedriver
+    chrome_path = 'C:/Users/janis/PycharmProjects/h9/Page/Tests/Drivers/chromedriver
     
 FireFox driver [geckodriver.exe] importand info:
     
@@ -80,43 +80,47 @@ Expected results:
     Successful login with capitalizer email
 ```
 
-### test_TS01_TC004_failed_login_correct_email_and_incorrect_password:
+```yaml
+test_TS01_TC004_failed_login_correct_email_and_incorrect_password:
 
-       Steps: 
-            1. Go to login page
-            2. Verify by url if login page is show
-            3. Verify text button is "zaloguj"
-            4. Type login - correct e-mail address
-            5. Type invalid password
-            6. Click on login button
-            7. Verify by url if login page is still visible
-            8. Click on icon account
-            9. Verify text button is "zaloguj" - in drop-down
-            10. Type login - correct e-mail address
-            11. Type invalid password and click on "Enter" key
-            12. Click on icon account
-            13. Verify text button is not "Wyloguj"
-            
-       Expected results:
-            Failed login
-                 
-### test_TS01_TC005_failed_login_incorrect_email_and_correct_password:
+Steps: 
+    1. Go to login page
+    2. Verify by url if login page is show
+    3. Verify text button is "zaloguj"
+    4. Type login - correct e-mail address
+    5. Type invalid password
+    6. Click on login button
+    7. Verify by url if login page is still visible
+    8. Click on icon account
+    9. Verify text button is "zaloguj" - in drop-down
+    10. Type login - correct e-mail address
+    11. Type invalid password and click on "Enter" key
+    12. Click on icon account
+    13. Verify text button is not "Wyloguj"
 
-        Steps:
-            1. Go to login page
-            2. Type login - incorrect e-mail address
-            3. Type correct password
-            4. Click on login button
-            5. Click on icon account
-            6. Verify text button is not "Wyloguj" - in drop-down
-            7. Type login - incorrect e-mail address
-            8. Type correct password and click on "Enter" key
-            9. Click on icon account
-            10. Verify text button is "Zaloguj" -n drop-down
-            
-        Expected results:
-            Failed login
-            
+Expected results:
+    Failed login
+```
+
+```yaml
+test_TS01_TC005_failed_login_incorrect_email_and_correct_password:
+
+Steps:
+    1. Go to login page
+    2. Type login - incorrect e-mail address
+    3. Type correct password
+    4. Click on login button
+    5. Click on icon account
+    6. Verify text button is not "Wyloguj" - in drop-down
+    7. Type login - incorrect e-mail address
+    8. Type correct password and click on "Enter" key
+    9. Click on icon account
+    10. Verify text button is "Zaloguj" -n drop-down
+
+Expected results:
+    Failed login
+```
+
 ### test_TS01_TC006_failed_login_correct_email_and_password_with_space_key:
 
         Steps:
