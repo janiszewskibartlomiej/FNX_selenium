@@ -30,24 +30,24 @@ FireFox driver [geckodriver.exe] importand info:
 ## Test Scenario TS01: Check Login Functionality
     
 
- ### test_TS01_TC001_successful_login_with_username:
+### test_TS01_TC001_successful_login_with_username:
 
-        ```yaml
-        Steps:
-            1. Go to login page
-            2. Verify by url if login page is show
-            3. Try to login with correct username and password
-            4. Verify by url if club page is show
-            5. Click on icon account
-            6. Verify logout button is visible
-            7. Verify text button is "Wyloguj"
-            8. Click on logout button
-            9. Verify login button is visible
-            10. Verify text button is "zaloguj"
-            
-        Expected results: 
-            Successful login with user name
-        ```
+```yaml
+Steps:
+    1. Go to login page
+    2. Verify by url if login page is show
+    3. Try to login with correct username and password
+    4. Verify by url if club page is show
+    5. Click on icon account
+    6. Verify logout button is visible
+    7. Verify text button is "Wyloguj"
+    8. Click on logout button
+    9. Verify login button is visible
+    10. Verify text button is "zaloguj"
+
+Expected results: 
+    Successful login with user name
+```
 
  ### test_TS01_TC002_successful_login_with_email:
 
