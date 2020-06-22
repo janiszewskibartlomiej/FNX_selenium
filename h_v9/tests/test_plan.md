@@ -33,7 +33,7 @@ FireFox driver [geckodriver.exe] importand info:
 ### test_TS01_TC001_successful_login_with_username:
 
 ```yaml
-### test_TS01_TC001_successful_login_with_username:
+test_TS01_TC001_successful_login_with_username:
 
 Steps:
     1. Go to login page
