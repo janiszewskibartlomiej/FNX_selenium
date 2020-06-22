@@ -33,6 +33,9 @@ FireFox driver [geckodriver.exe] importand info:
 ```yaml
 test_TS01_TC001_successful_login_with_username: 
 
+Preconditions:
+    None
+
 Steps:
     1. Go to login page
     2. Verify by url if login page is show
@@ -52,6 +55,9 @@ Expected results:
 ```yaml
 test_TS01_TC002_successful_login_with_email:
 
+Preconditions:
+    None
+
 Steps:
     1. Go to login page
     2. Verify by url if login page is show
@@ -69,6 +75,9 @@ Expected results:
 ```yaml
 test_TS01_TC003_successful_login_with_email_capitalizer:
 
+Preconditions:
+    None
+
 Steps:
     1. Go to login page
     2. Type login - correct e-mail address with big first char
@@ -82,6 +91,9 @@ Expected results:
 
 ```yaml
 test_TS01_TC004_failed_login_correct_email_and_incorrect_password:
+
+Preconditions:
+    None
 
 Steps: 
     1. Go to login page
@@ -105,6 +117,9 @@ Expected results:
 ```yaml
 test_TS01_TC005_failed_login_incorrect_email_and_correct_password:
 
+Preconditions:
+    None
+
 Steps:
     1. Go to login page
     2. Type login - incorrect e-mail address
@@ -124,6 +139,9 @@ Expected results:
 ```yaml
 test_TS01_TC006_failed_login_correct_email_and_password_with_space_key:
 
+Preconditions:
+    None
+
 Steps:
     1. Go to login page
     2. Type login - space key + correct e-mail address
@@ -138,6 +156,9 @@ Expected results:
 
 ```yaml
 test_TS01_TC007_failed_login_email_and_password_are_left_blank:
+
+Preconditions:
+    None
 
 Steps:
     1. Go to login page
@@ -155,6 +176,9 @@ Expected results:
 ```yaml
 test_TS01_TC008_failed_login_reverse_data_input:
 
+Preconditions:
+    None
+
 Steps:
     1. Go to login page
     2. Type login - correct "passsword"
@@ -169,10 +193,13 @@ Expected results:
 ### Test Scenario TS02: Check captcha functionality
 
  ```yaml
- test_TS02_TC001_captcha_is_visible_after_three_times_incorrect_login:
+test_TS02_TC001_captcha_is_visible_after_three_times_incorrect_login:
+
+Preconditions:
+    None
 
 Steps:
-    1. Go to home page
+    . Go to home page
     2. Click on icon account
     3. Click on logout button
     4. Verify by url if login page is show
@@ -185,7 +212,10 @@ Expected results:
 ```
 
 ```yaml
- test_TS02_TC002_captcha_is_visible_again_after_one_times_incorrect_login:
+test_TS02_TC002_captcha_is_visible_again_after_one_times_incorrect_login:
+
+Preconditions:
+    None
  
 Steps:
     1. Go to login page
@@ -200,7 +230,10 @@ Expected results:
 ```
 
 ```yaml
- test_TS02_TC003_captcha_is_visible_after_three_times_incorrect_login_total_quantity:
+test_TS02_TC003_captcha_is_visible_after_three_times_incorrect_login_total_quantity:
+
+Preconditions:
+    None
  
 Steps:
     1. Go to login page
