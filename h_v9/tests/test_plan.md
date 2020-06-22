@@ -29,7 +29,6 @@ FireFox driver [geckodriver.exe] importand info:
 
 ### Test Scenario TS01: Check Login Functionality
     
-TS01_TC001<a name="test_TS01_TC001_successful_login_with_username"></a>
 
 ```yaml
 test_TS01_TC001_successful_login_with_username: 
@@ -67,18 +66,20 @@ Expected results:
     Successful login with email
 ```
 
-### test_TS01_TC003_successful_login_with_email_capitalizer:
+```yaml
+test_TS01_TC003_successful_login_with_email_capitalizer:
 
-        Steps:
-            1. Go to login page
-            2. Type login - correct e-mail address with big first char
-            3. Type correct password
-            4. Click on icon account
-            5. Verify text button is "Wyloguj"
-        
-        Expected results:
-            Successful login with capitalizer email
-            
+Steps:
+    1. Go to login page
+    2. Type login - correct e-mail address with big first char
+    3. Type correct password
+    4. Click on icon account
+    5. Verify text button is "Wyloguj"
+
+Expected results:
+    Successful login with capitalizer email
+```
+
 ### test_TS01_TC004_failed_login_correct_email_and_incorrect_password:
 
        Steps: 
