@@ -1,13 +1,12 @@
 import sys
 import unittest
 from datetime import date
-
 import HtmlTestRunner
 
-import suiteAllTestsChrome
-import suiteAllTestsFireFox
-import suiteAllTests_IE
-from test_data import Staging
+import tests.suiteAllTestsChrome as suiteAllTestsChrome
+import tests.suiteAllTestsFireFox as suiteAllTestsFireFox
+import tests.suiteAllTests_IE as suiteAllTests_IE
+from resources.test_data import Staging
 
 if __name__ == '__main__':
     current_date = date.today()
@@ -23,14 +22,14 @@ if __name__ == '__main__':
 
     domain = Staging.DOMAIN
 
-    report_title = f'Test Results of {domain} in Chrome & FF'
+    report_title = f'Test Results of {domain} in Chrome & FF & IE'
 
     domain_strip = domain[:14]
     if domain_strip[-1] == '-':
         domain_strip = domain_strip[:13]
     report_name = domain_strip + "-AllBrowsers"
 
-    runner = HtmlTestRunner.HTMLTestRunner(output='../reports/' + current_date_template, combine_reports=True,
+    runner = HtmlTestRunner.HTMLTestRunner(output='reports/' + current_date_template, combine_reports=True,
                                            report_title=report_title, report_name=report_name, verbosity=2,
                                            failfast=False, descriptions=True, buffer=False)
     runner.run(suite)

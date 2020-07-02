@@ -3,20 +3,11 @@ import os
 import unittest
 from datetime import date
 import HtmlTestRunner
-root_path = os.path.abspath('../resources')
-root_path2 = os.path.abspath('../resources/page_object')
-
-print(sys.path)
-sys.path.append(root_path)
-sys.path.append(root_path2)
-print(sys.path)
-
-from home_page import HomePage
-from test1412LoginSuccessful_IE import LoginSuccessTestCase
-from test1412LoginFailure_IE import LoginFailureTestCase
-from test1416Captcha_IE import CaptchaTestCase
+from tests.test1412LoginSuccessful_IE import LoginSuccessTestCase
+from tests.test1412LoginFailure_IE import LoginFailureTestCase
+from tests.test1416Captcha_IE import CaptchaTestCase
 from concurrencytest import ConcurrentTestSuite, fork_for_tests
-from test_data import Dev, Staging
+from resources.test_data import Dev, Staging
 
 
 def suite():

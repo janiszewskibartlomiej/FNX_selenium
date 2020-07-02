@@ -1,10 +1,10 @@
-import time
+import unittest
 from selenium import webdriver
-from test_data import CommonData
+
+from resources.test_data import CommonData
 from resources.page_object.home_page import HomePage
 from resources.page_object.login_page import LoginPage
 from resources.locators import HomePageLocators, LoginPageLocators
-import unittest
 
 
 class CaptchaTestCaseBase(unittest.TestCase):

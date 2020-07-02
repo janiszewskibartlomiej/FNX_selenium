@@ -3,17 +3,10 @@ import os
 import unittest
 from datetime import date
 import HtmlTestRunner
-
-from home_page import HomePage
-from test1412LoginSuccessfulFireFox import LoginSuccessTestCase as  LoginSuccessFireFox
-from test1412LoginFailureFireFox import LoginFailureTestCase as LoginFailureFireFox
-from test1416CaptchaFireFox import CaptchaTestCase as CaptchaFireFox
-from concurrencytest import ConcurrentTestSuite, fork_for_tests
-
-# root_path = os.path.abspath('..')
-# print(sys.path)
-# os.chdir(root_path)
-from test_data import Dev, Staging
+from tests.test1412LoginSuccessfulFireFox import LoginSuccessTestCase as  LoginSuccessFireFox
+from tests.test1412LoginFailureFireFox import LoginFailureTestCase as LoginFailureFireFox
+from tests.test1416CaptchaFireFox import CaptchaTestCase as CaptchaFireFox
+from resources.test_data import Dev, Staging
 
 
 def suite():
@@ -45,7 +38,6 @@ if __name__ == '__main__':
 
     suite = suite()
 
-    # domain = Dev.DOMAIN
     domain = Staging.DOMAIN
 
     report_title = f'Test Results of {domain}'
@@ -59,6 +51,3 @@ if __name__ == '__main__':
                                            report_title=report_title, report_name=report_name, verbosity=2,
                                            failfast=False, descriptions=True, buffer=False)
     runner.run(suite)
-
-    # concurrent_suite = ConcurrentTestSuite(suite, fork_for_tests(2))
-    # runner.run(concurrent_suite)

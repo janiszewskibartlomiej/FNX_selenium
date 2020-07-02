@@ -1,15 +1,10 @@
-import os
 import time
 import unittest
-from datetime import date
-
 from selenium import webdriver
-# from resource.test_data import Dev
-from login_page import LoginPage
-from locators import HomePageLocators, LoginPageLocators
-from test_data import CommonData, Staging
-# from resources.page_object.login_page import LoginPage
-# from resources.locators import HomePageLocators, LoginPageLocators
+
+from resources.page_object.login_page import LoginPage
+from resources.locators import HomePageLocators, LoginPageLocators
+from resources.test_data import CommonData, Staging
 
 
 class LoginSuccessTestCaseBase(unittest.TestCase):
