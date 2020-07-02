@@ -3,15 +3,19 @@ import os
 import unittest
 from datetime import date
 import HtmlTestRunner
+root_path = os.path.abspath('../resources')
+root_path2 = os.path.abspath('../resources/page_object')
+
+print(sys.path)
+sys.path.append(root_path)
+sys.path.append(root_path2)
+print(sys.path)
 
 from home_page import HomePage
-from test1412LoginSuccessful import LoginSuccessTestCase
-from test1412LoginFailure import LoginFailureTestCase
-from test1416Captcha import CaptchaTestCase
-
-# root_path = os.path.abspath('..')
-# print(sys.path)
-# os.chdir(root_path)
+from test1412LoginSuccessful_IE import LoginSuccessTestCase
+from test1412LoginFailure_IE import LoginFailureTestCase
+from test1416Captcha_IE import CaptchaTestCase
+from concurrencytest import ConcurrentTestSuite, fork_for_tests
 from test_data import Dev, Staging
 
 
@@ -22,6 +26,7 @@ def suite():
     suite.addTest(LoginSuccessTestCase('test_TS01_TC001_successful_login_with_username'))
     suite.addTest(LoginSuccessTestCase('test_TS01_TC002_successful_login_with_email'))
     suite.addTest(LoginSuccessTestCase('test_TS01_TC003_successful_login_with_email_capitalizer'))
+    suite.addTest(LoginSuccessTestCase('test_TS01_TC009_successful_login_with_facebook'))
 
     suite.addTest(LoginFailureTestCase('test_TS01_TC004_failed_login_correct_email_and_incorrect_password'))
     suite.addTest(LoginFailureTestCase('test_TS01_TC005_failed_login_incorrect_email_and_correct_password'))
@@ -51,9 +56,12 @@ if __name__ == '__main__':
     domain_strip = domain[:14]
     if domain_strip[-1] == '-':
         domain_strip = domain_strip[:13]
-    report_name = domain_strip
+    report_name = domain_strip + "-IE"
 
     runner = HtmlTestRunner.HTMLTestRunner(output='../reports/' + current_date_template, combine_reports=True,
                                            report_title=report_title, report_name=report_name, verbosity=2,
                                            failfast=False, descriptions=True, buffer=False)
     runner.run(suite)
+
+    # concurrent_suite = ConcurrentTestSuite(suite, fork_for_tests(2))
+    # runner.run(concurrent_suite)

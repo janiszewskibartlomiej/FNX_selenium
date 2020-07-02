@@ -1,6 +1,8 @@
 from datetime import date
 import time
+import os
 from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -18,10 +20,10 @@ class BasePage:
         self.base_url = Staging.ACCESS
 
     def click_on(self, by_loctor):
-        return WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(by_loctor)).click()
+        return WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(by_loctor)).click()
 
     def assert_elemnet_text(self, by_locator, element_text):
-        web_element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(by_locator))
+        web_element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(by_locator))
         assert web_element.text == element_text
 
     def assert_path_in_current_url(self, path):
@@ -29,25 +31,32 @@ class BasePage:
         assert path in current_url
 
     def enter_text(self, by_locator, text):
-        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(by_locator))
+        element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(by_locator))
         element.clear()
         return element.send_keys(text)
 
     def enter_text_and_click_enter(self, by_locators, text):
-        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(by_locators))
+        element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(by_locators))
         element.clear()
         return element.send_keys(text + Keys.ENTER)
 
-    def element_is_enable(self, by_locator):
-        return WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(by_locator))
+    def is_clickable(self, by_locator):
+        return WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(by_locator))
 
-    def elemnt_is_visible(self, by_locator):
-        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(by_locator))
+    def element_is_visible(self, by_locator):
+        element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(by_locator))
         return bool(element)
 
+    def get_element(self, by_locator):
+        return WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(by_locator))
+
     def hover_to(self, by_locator):
-        element = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(by_locator))
+        element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(by_locator))
         return ActionChains(self.driver).move_to_element(element).perform()
+
+    def choose(self, drop_down_select, name):
+        drop_down = WebDriverWait(self, 20).until(EC.visibility_of_element_located(drop_down_select))
+        drop_down.find_element(By.NAME(name)).click()
 
     def quit(self):
         self.driver.close()
@@ -69,10 +78,15 @@ class BasePage:
         required_width = self.driver.execute_script('return document.body.parentNode.scrollWidth')
         required_height = self.driver.execute_script('return document.body.parentNode.scrollHeight')
         self.driver.set_window_size(required_width, required_height)
+
         current_date = date.today()
         current_date_template = str(current_date).replace('-', '')
+        if not os.path.exists('../reports/' + current_date_template):
+            os.makedirs('../reports/' + current_date_template)
+
         t = time.localtime()
         current_time = time.strftime("%H-%M-%S", t)
         path = f"../reports/{current_date_template}/screenshot_{name}{current_time}.png"
+
         self.driver.find_element_by_tag_name('body').screenshot(path)
         self.driver.set_window_size(original_size['width'], original_size['height'])

@@ -190,6 +190,26 @@ Expected results:
     Failed login
 ```
 
+```yaml
+test_TS01_TC009_successful_login_with_facebook:
+
+Preconditions:
+    None
+
+Steps:
+    1. Go to login page
+    2. Click on facebook butoon
+    3. Type correct "email"
+    4. Type correct "password"
+    5. Click on "Zaloguj" button
+    6. Click on icon account
+    7. Verify text link is "Moje dzieci" - in drop-down
+    8. Verify URL is "klub-logged-in/moj-klub-maluszka/"
+
+Expected results:
+    Successful login with email
+```
+
 ### Test Scenario TS02: Check captcha functionality
 
  ```yaml

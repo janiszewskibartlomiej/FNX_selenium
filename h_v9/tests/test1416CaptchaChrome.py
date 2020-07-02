@@ -12,11 +12,14 @@ class CaptchaTestCaseBase(unittest.TestCase):
     def setUp(self) -> None:
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--ignore-certificate-errors')
+        chrome_options.add_argument('--headless')
         self.driver = webdriver.Chrome(CommonData.CHROME_PATH, options=chrome_options)
+        # self.driver = webdriver.Remote(command_executor='http://192.168.8.103:5000/wd/hub', desired_capabilities= chrome_options.to_capabilities())
         self.driver.maximize_window()
 
     def tearDown(self) -> None:
         self.driver.quit()
+        self.driver.stop_client()
 
     """
     Test of  captcha functionality
@@ -44,10 +47,9 @@ class CaptchaTestCase(CaptchaTestCaseBase):
             self.login_page.login_as(username=user, password=password, submit=True)
             self.login_page.login_as(username=user, password=password, submit=True)
             self.login_page.login_as(username=user, password=password, submit=False)
-            # self.login_page.assert_path_in_current_url(path='/abc')
             self.login_page.click_on(LoginPageLocators.CAPTCHA_SECTION)
         except:
-            self.home_page.do_screenshot(
+            self.login_page.do_screenshot(
                 name="test_TS02_TC001_")
             raise
 
@@ -61,10 +63,12 @@ class CaptchaTestCase(CaptchaTestCaseBase):
             self.login_page = LoginPage(self.driver)
             self.login_page.login_as(username=user, password=password, submit=True)
             self.login_page.assert_path_in_current_url(path='/walidacja')
-            self.login_page.assert_elemnet_text(LoginPageLocators.CAPTCHA_SECTION, element_text='reCAPTCHA')
+            captcha_text = 'reCAPTCHA'
+            self.login_page.assert_elemnet_text(LoginPageLocators.CAPTCHA_SECTION, element_text=captcha_text)
+            assert captcha_text in self.login_page.driver.page_source
             self.login_page.click_on(LoginPageLocators.CAPTCHA_SECTION)
         except:
-            self.home_page.do_screenshot(
+            self.login_page.do_screenshot(
                 name="test_TS02_TC002_")
             raise
 
@@ -82,7 +86,7 @@ class CaptchaTestCase(CaptchaTestCaseBase):
             self.login_page.login_as(username=username, password=password)
             self.login_page.click_on(by_loctor=LoginPageLocators.CAPTCHA_SECTION)
         except:
-            self.home_page.do_screenshot(
+            self.login_page.do_screenshot(
                 name="test_TS02_TC003_")
             raise
 
