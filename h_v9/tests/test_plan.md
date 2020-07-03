@@ -11,7 +11,9 @@ install Python https://www.python.org/downloads/
 Open terminal and type command: 
     
         1. 'pip install -r requirements.txt'
-        3. 'python -m unittest -v suiteAllTest.py"
+        3. 'python -v runAllTests.py'
+        
+
 
 Chrome driver importand info:
 
@@ -50,9 +52,8 @@ Steps:
 
 Expected results: 
     Successful login with user name
-```
 
-```yaml
+
 test_TS01_TC002_successful_login_with_email:
 
 Preconditions:
@@ -70,9 +71,8 @@ Steps:
 
 Expected results:
     Successful login with email
-```
 
-```yaml
+
 test_TS01_TC003_successful_login_with_email_capitalizer:
 
 Preconditions:
@@ -87,9 +87,8 @@ Steps:
 
 Expected results:
     Successful login with capitalizer email
-```
 
-```yaml
+
 test_TS01_TC004_failed_login_correct_email_and_incorrect_password:
 
 Preconditions:
@@ -112,9 +111,8 @@ Steps:
 
 Expected results:
     Failed login
-```
 
-```yaml
+
 test_TS01_TC005_failed_login_incorrect_email_and_correct_password:
 
 Preconditions:
@@ -134,9 +132,8 @@ Steps:
 
 Expected results:
     Failed login
-```
 
-```yaml
+
 test_TS01_TC006_failed_login_correct_email_and_password_with_space_key:
 
 Preconditions:
@@ -152,9 +149,8 @@ Steps:
 
 Expected results:
     Failed login
-```
 
-```yaml
+
 test_TS01_TC007_failed_login_email_and_password_are_left_blank:
 
 Preconditions:
@@ -171,9 +167,8 @@ Steps:
 
 Expected results:
     Failed login
-```
 
-```yaml
+
 test_TS01_TC008_failed_login_reverse_data_input:
 
 Preconditions:
@@ -188,9 +183,8 @@ Steps:
 
 Expected results:
     Failed login
-```
 
-```yaml
+
 test_TS01_TC009_successful_login_with_facebook:
 
 Preconditions:
@@ -208,11 +202,12 @@ Steps:
 
 Expected results:
     Successful login with email
-```
+
+
 
 ### Test Scenario TS02: Check captcha functionality
 
- ```yaml
+ 
 test_TS02_TC001_captcha_is_visible_after_three_times_incorrect_login:
 
 Preconditions:
@@ -229,9 +224,8 @@ Steps:
 
 Expected results:
     Captcha is visible
-```
 
-```yaml
+
 test_TS02_TC002_captcha_is_visible_again_after_one_times_incorrect_login:
 
 Preconditions:
@@ -247,9 +241,8 @@ Steps:
 
 Expected results:
     Captcha is visible
-```
 
-```yaml
+
 test_TS02_TC003_captcha_is_visible_after_three_times_incorrect_login_total_quantity:
 
 Preconditions:
