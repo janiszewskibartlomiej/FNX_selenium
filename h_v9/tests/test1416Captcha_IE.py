@@ -41,6 +41,7 @@ class CaptchaTestCase(CaptchaTestCaseBase):
     def test_TS02_TC001_captcha_is_visible_after_three_times_incorect_login(self):
         try:
             self.home_page.click_on(HomePageLocators.ICON_ACCOUNT)
+            time.sleep(3)
             self.home_page.click_on(HomePageLocators.LOGIN_BUTTON)
             self.home_page.assert_path_in_current_url(path='/klub/zaloguj-sie')
             user = 'test@test.pl'
@@ -54,7 +55,7 @@ class CaptchaTestCase(CaptchaTestCaseBase):
             self.login_page.click_on(LoginPageLocators.CAPTCHA_SECTION)
         except:
             self.login_page.do_screenshot(
-                name="test_TS02_TC001_")
+                name="test_TS02_TC001_", ie=True)
             raise
 
     @unittest.skip('I must search solution this test case')
@@ -74,7 +75,7 @@ class CaptchaTestCase(CaptchaTestCaseBase):
             self.login_page.click_on(LoginPageLocators.CAPTCHA_SECTION)
         except:
             self.login_page.do_screenshot(
-                name="test_TS02_TC002_")
+                name="test_TS02_TC002_", ie=True)
             raise
 
     def test_TS02_TC003_captcha_is_visible_after_three_times_incorrect_login_total_quantity(self):
@@ -98,7 +99,7 @@ class CaptchaTestCase(CaptchaTestCaseBase):
             self.login_page.click_on(by_loctor=LoginPageLocators.CAPTCHA_SECTION)
         except:
             self.login_page.do_screenshot(
-                name="test_TS02_TC003_")
+                name="test_TS02_TC003_", ie=True)
             raise
 
 

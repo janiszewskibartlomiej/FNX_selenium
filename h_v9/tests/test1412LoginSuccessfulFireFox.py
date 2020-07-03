@@ -73,6 +73,7 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
             self.login_page.assert_elemnet_text(LoginPageLocators.LOGOUT_BUTTON, logout_text)
             self.assertTrue(logout_text in self.login_page.driver.page_source)
             self.login_page.click_on(LoginPageLocators.LOGOUT_BUTTON)
+            time.sleep(1)
             self.login_page.assert_elemnet_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
         except:
             self.login_page.do_screenshot(

@@ -1,3 +1,4 @@
+import time
 import unittest
 from selenium import webdriver
 
@@ -74,7 +75,9 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
         try:
             self.login_page.login_as(username=' ' + self.correct_email, password=' ' + self.correct_password,
                                      submit=False)
+            time.sleep(3)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
+            time.sleep(3)
             self.login_page.assert_elemnet_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
         except:
             self.login_page.do_screenshot(

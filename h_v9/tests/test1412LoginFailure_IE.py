@@ -35,6 +35,7 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
     def test_TS01_TC004_failed_login_correct_email_and_incorrect_password(self):
         try:
             password = CommonData.INCORRECT_PASSWORD_1
+            time.sleep(3)
             self.login_page.assert_path_in_current_url(path='/klub/zaloguj-sie')
             self.login_page.assert_elemnet_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
             self.login_page.login_as(username=self.correct_email, password=password, submit=True)
@@ -50,7 +51,7 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
             self.login_page.assert_elemnet_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
         except:
             self.login_page.do_screenshot(
-                name="test_TS01_TC004_")
+                name="test_TS01_TC004_", ie=True)
             raise
 
     def test_TS01_TC005_failed_login_incorrect_email_and_correct_password(self):
@@ -68,19 +69,20 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
             self.login_page.assert_elemnet_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
         except:
             self.login_page.do_screenshot(
-                name="test_TS01_TC005_")
+                name="test_TS01_TC005_", ie=True)
             raise
 
     def test_TS01_TC006_failed_login_correct_email_and_password_with_space_key(self):
         try:
             self.login_page.login_as(username=' ' + self.correct_email, password=' ' + self.correct_password,
                                      submit=False)
-            time.sleep(3)
+            time.sleep(5)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
+            time.sleep(3)
             self.login_page.assert_elemnet_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
         except:
             self.login_page.do_screenshot(
-                name="test_TS01_TC006_")
+                name="test_TS01_TC006_", ie=True)
             raise
 
     def test_TS01_TC007_failed_login_email_and_password_are_left_blank(self):
@@ -92,7 +94,7 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
             self.login_page.assert_elemnet_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
         except:
             self.login_page.do_screenshot(
-                name="test_TS01_TC007_")
+                name="test_TS01_TC007_", ie=True)
             raise
 
     def test_TS01_TC008_failed_login_reverse_data_input(self):
@@ -103,7 +105,7 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
             self.login_page.assert_elemnet_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
         except:
             self.login_page.do_screenshot(
-                name="test_TS01_TC008_")
+                name="test_TS01_TC008_", ie=True)
             raise
 
 

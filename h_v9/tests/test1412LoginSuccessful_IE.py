@@ -19,6 +19,7 @@ class LoginSuccessTestCaseBase(unittest.TestCase):
     def setUp(self) -> None:
         caps = DesiredCapabilities.INTERNETEXPLORER
         caps['ignoreProtectedModeSettings'] = True
+        caps['ie.ensureCleanSession'] = True
         self.driver = webdriver.Ie(CommonData.IE_PATH, capabilities=caps)
         self.driver.maximize_window()
 
@@ -46,11 +47,12 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
             assert self.login_page.element_is_visible(LoginPageLocators.LOGOUT_BUTTON) is True
             self.login_page.assert_elemnet_text(LoginPageLocators.LOGOUT_BUTTON, "Wyloguj")
             self.login_page.click_on(LoginPageLocators.LOGOUT_BUTTON)
+            time.sleep(3)
             assert self.login_page.element_is_visible(LoginPageLocators.SUBMIT_BTN) is True
             self.login_page.assert_elemnet_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
         except:
             self.login_page.do_screenshot(
-                name="test_TS01_TC001_")
+                name="test_TS01_TC001_", ie=True)
             raise
 
     def test_TS01_TC002_successful_login_with_email(self):
@@ -67,13 +69,15 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
             time.sleep(3)
             self.login_page.assert_path_in_current_url(path=self.after_login_url)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
+            time.sleep(3)
             self.login_page.assert_elemnet_text(LoginPageLocators.LOGOUT_BUTTON, logout_text)
             self.assertTrue(logout_text in self.login_page.driver.page_source)
             self.login_page.click_on(LoginPageLocators.LOGOUT_BUTTON)
+            time.sleep(3)
             self.login_page.assert_elemnet_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
         except:
             self.login_page.do_screenshot(
-                name="test_TS01_TC002_")
+                name="test_TS01_TC002_", ie=True)
             raise
 
     def test_TS01_TC003_successful_login_with_email_capitalizer(self):
@@ -81,23 +85,25 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
             text_in_dropdown = "Jesteś zalogowana/y jako"
             username = CommonData.USER_EMAIL_CAPITALIZER
             self.login_page.login_as(username=username, password=self.password, submit=False)
+            time.sleep(3)
             self.login_page.is_clickable(by_locator=HomePageLocators.ICON_ACCOUNT)
             time.sleep(3)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
+            time.sleep(3)
             drop_down = self.login_page.get_element(by_locator=LoginPageLocators.DROP_DOWN_SECTION)
             assert text_in_dropdown in drop_down.get_attribute("innerHTML")
             assert text_in_dropdown in self.login_page.driver.page_source
         except:
             self.login_page.do_screenshot(
-                name="test_TS01_TC003_")
+                name="test_TS01_TC003_", ie=True)
             raise
 
     def test_TS01_TC009_successful_login_with_facebook(self):
         try:
             link_text = "Moje dzieci"
-            self.driver.delete_all_cookies()
+            time.sleep(5)
             self.login_page.click_on(by_loctor=LoginPageLocators.LOGIN_BY_FACEBOOK)
-            time.sleep(3)
+            time.sleep(5)
             self.login_page.enter_text(by_locator=LoginPageLocators.FACEBOOK_EMAIL, text=CommonData.FACEBOOK_EMAIL)
             self.login_page.enter_text(by_locator=LoginPageLocators.FACEBOOK_PASSWORD,
                                        text=CommonData.FACEBOOK_PASSWORD)
@@ -105,12 +111,13 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
             self.login_page.click_on(by_loctor=LoginPageLocators.FACEBOOK_LOGIN_BTN)
             time.sleep(3)
             self.login_page.click_on(by_loctor=LoginPageLocators.ICON_ACCOUNT)
+            time.sleep(3)
             assert link_text in self.login_page.driver.page_source
             self.login_page.assert_elemnet_text(by_locator=LoginPageLocators.MY_CHILDREN_LINK_TEXT,
                                                 element_text=link_text)
             self.login_page.assert_path_in_current_url(path="klub-logged-in/moj-klub-maluszka/")
         except:
-            self.login_page.do_screenshot(name="test_TS01_TC009_")
+            self.login_page.do_screenshot(name="test_TS01_TC009_", ie=True)
             raise
 
 

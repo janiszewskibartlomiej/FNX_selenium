@@ -44,6 +44,7 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
             assert self.login_page.element_is_visible(LoginPageLocators.LOGOUT_BUTTON) is True
             self.login_page.assert_elemnet_text(LoginPageLocators.LOGOUT_BUTTON, "Wyloguj")
             self.login_page.click_on(LoginPageLocators.LOGOUT_BUTTON)
+            time.sleep(3)
             assert self.login_page.element_is_visible(LoginPageLocators.SUBMIT_BTN) is True
             self.login_page.assert_elemnet_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
         except:
