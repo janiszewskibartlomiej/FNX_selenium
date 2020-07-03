@@ -202,12 +202,12 @@ Steps:
 
 Expected results:
     Successful login with email
-
+```
 
 
 ### Test Scenario TS02: Check captcha functionality
 
- 
+ ```yaml
 test_TS02_TC001_captcha_is_visible_after_three_times_incorrect_login:
 
 Preconditions:
