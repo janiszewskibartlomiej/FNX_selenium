@@ -29,7 +29,9 @@ FireFox driver [geckodriver.exe] importand info:
 ***
 | Test Scenario and Case id | TC name | Description |
 | --- | --- | --- |
-| [TS01_TC001](#TS01_TC001) | Successful login | using correct username |
+| [TS01_TC001](#TS01_TC001) | Successful login | Using correct username and password |
+| [TS01_TC002](#TS01_TC002) | Successful login | Using correct email and password |
+***
 
 ### Test Scenario TS01: Check Login Functionality
     
@@ -56,8 +58,8 @@ Expected results:
     Successful login with user name
 ```
 
-test_TS01_TC002_successful_login_with_email:
-
+test_TS01_TC002_successful_login_with_email: <a name="TS01_TC002"></a>
+```yaml
 Preconditions:
     None
 
@@ -73,7 +75,7 @@ Steps:
 
 Expected results:
     Successful login with email
-
+```
 
 test_TS01_TC003_successful_login_with_email_capitalizer:
 
