@@ -21,11 +21,16 @@ Chrome driver importand info:
     
     example: 
     
-    chrome_path = 'C:/Users/janis/PycharmProjects/h9/Page/Tests/Drivers/chromedriver
+    CHROME_PATH = 'C:/Users/janis/PycharmProjects/h9/Page/Tests/Drivers/chromedriver.exe
     
 FireFox driver [geckodriver.exe] importand info:
     
-    file gockodriver must be in the same directory as test file
+    In test_data > FIREFOX_PATH = we must enter absolut path to file geckodriver.exe - use slash '/'
+    
+    example: 
+    
+    FIREFOX_PATH = 'C:/Users/janis/PycharmProjects/h9/Page/Tests/Drivers/geckodriver.exe
+    
 ***
 | Test Scenario and Case id | TC name | Description |
 | --- | --- | --- |
