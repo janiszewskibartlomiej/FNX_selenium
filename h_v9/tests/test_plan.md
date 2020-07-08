@@ -29,13 +29,13 @@ FireFox driver [geckodriver.exe] importand info:
 ***
 | Test Scenario and Case id | TC name | Description |
 | --- | --- | --- |
-| TS01_TC001 <a name="TS01_TC001"></a> | Successful login | using correct username |
+| [TS01_TC001](#TS01_TC001) | Successful login | using correct username |
 
 ### Test Scenario TS01: Check Login Functionality
     
 
 ```yaml
-test_TS01_TC001_successful_login_with_username: 
+test_TS01_TC001_successful_login_with_username: <a name="test_TS01_TC001_successful_login_with_username:"></a>
 
 Preconditions:
     None
