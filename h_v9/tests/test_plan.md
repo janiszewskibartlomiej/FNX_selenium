@@ -27,7 +27,9 @@ FireFox driver [geckodriver.exe] importand info:
     
     file gockodriver must be in the same directory as test file
 ***
-
+| Test Scenario and Case id | TC name | Description |
+| --- | --- | --- |
+| TS01_TC001 <a name="TS01_TC001" | Successful login | using correct username |
 
 ### Test Scenario TS01: Check Login Functionality
     
