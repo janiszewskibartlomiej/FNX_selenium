@@ -35,7 +35,7 @@ FireFox driver [geckodriver.exe] importand info:
     
 ***
 | Test Scenario id | Test Scenario name |
-| --- | --- | --- |
+| --- | --- |
 | [TS01](#TS01) | Check Login Functionality |
 | [TS02](#TS02) | Check captcha functionality |
 ***
