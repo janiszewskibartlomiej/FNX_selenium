@@ -3,6 +3,8 @@ What you need:
     Python 3
     Selenium
     html-testRunner
+    pytest
+    pytest-html
     
 Run steps:
 
@@ -32,13 +34,20 @@ FireFox driver [geckodriver.exe] importand info:
     FIREFOX_PATH = 'C:/Users/janis/PycharmProjects/h9/Page/Tests/Drivers/geckodriver.exe
     
 ***
+| Test Scenario id | Test Scenario name |
+| --- | --- | --- |
+| [TS01](#TS01) | Check Login Functionality |
+| [TS02](#TS02) | Check captcha functionality |
+***
+    
+***
 | Test Scenario and Test Case id | Test Case name | Description |
 | --- | --- | --- |
 | [TS01_TC001](#TS01_TC001) | Successful login | Using correct username and password |
 | [TS01_TC002](#TS01_TC002) | Successful login | Using correct email and password |
 ***
 
-### Test Scenario TS01: Check Login Functionality
+### Test Scenario TS01: Check Login Functionality <a name="TS01"></a>
     
 
 
@@ -211,12 +220,12 @@ Steps:
 
 Expected results:
     Successful login with email
-```
 
 
-### Test Scenario TS02: Check captcha functionality
 
- ```yaml
+### Test Scenario TS02: Check captcha functionality <a name="TS02"></a>
+
+ 
 test_TS02_TC001_captcha_is_visible_after_three_times_incorrect_login:
 
 Preconditions:
