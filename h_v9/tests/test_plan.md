@@ -296,3 +296,57 @@ Steps:
 Expected results:
     Captcha is visible
 ```
+
+### Test Scenario TS03: Check  my children functionality <a name="TS03"></a>
+
+test_TS03_TC001_successful_adding_pregnancy_with_no_gender: <a name="TS01_TC001"></a>
+```yaml
+Preconditions:
+     Registered, active user in the system and login
+ 
+Steps:
+    1. Go to add baby page
+    2. Verify current url is '/profil-uzytkownika/dodaj-dziecko'
+    3. Click on "Jestem w ciąży"
+    4. Click on "Nieznana"
+    5. Verify select day is clickable and set day = random number
+    6. Verify select month is clickable and set month = current month + 1
+    7. Verify select year is clickable and set year =  current year
+    8. Click on "Dodaj dziecko"
+    9. Verify current url is '/profil-uzytkownika/lista-dzieci'
+    10. Verify img stork is visible
+    11. Verify name is "nieznane"
+    12. Verify link text is visibe = 'Potwierdź datę urodzenia dziecka'
+    13. Verify date of brith is like random_number.current_month_pus_one.current_year
+    14. Verify gender is 'Nieznana'
+    15. Verify gift for childbrith is 'NIE'
+
+Expected results:
+    All test steps passed as excepted
+```
+
+test_TS03_TC002_successful_adding_pregnancy_with_male_gender <a name="TS01_TC002"></a>
+```yaml
+Preconditions:
+     Registered, active user in the system and login
+ 
+Steps:
+    1. Go to add baby page
+    2. Verify current url is '/profil-uzytkownika/dodaj-dziecko'
+    3. Click on "Jestem w ciąży"
+    4. Click on "Dziewczynka"
+    5. Verify select day is clickable and set day = random number
+    6. Verify select month is clickable and set month = current month + 1
+    7. Verify select year is clickable and set year =  current year
+    8. Click on "Dodaj dziecko"
+    9. Verify current url is '/profil-uzytkownika/lista-dzieci'
+    10. Verify img stork is visible
+    11. Verify name is "nieznane"
+    12. Verify link text is visibe = 'Potwierdź datę urodzenia dziecka'
+    13. Verify date of brith is like random_number.current_month_pus_one.current_year
+    14. Verify gender is 'Nieznana'
+    15. Verify gift for childbrith is 'NIE'
+
+Expected results:
+    All test steps passed as excepted
+```
