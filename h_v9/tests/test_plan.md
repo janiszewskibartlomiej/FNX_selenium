@@ -42,7 +42,7 @@ FireFox driver [geckodriver.exe] importand info:
     
 ***
 | Test Scenario and Test Case id | Test Case name | Description | Preconditions | Steps | Expected results |
-| --- | --- | --- |
+| --- | --- | --- | --- | --- | --- |
 | [TS01_TC001](#TS01_TC001) | Successful login | Using correct username and password | none | 
     1. Go to login page
     2. Verify by url if login page is show
