@@ -39,19 +39,22 @@ FireFox driver [geckodriver.exe] importand info:
 | [TS01](#TS01) | Check Login Functionality | | | |
 | | | [TS01_TC001](#TS01_TC001) | Successful login | Using correct username and password |
 | | | [TS01_TC002](#TS01_TC002) | Successful login | Using correct email and password |
+| | | [TS01_TC003](#TS01_TC003) | Successful login | Using correct email and password - capitalizer |
+| | | [TS01_TC009](#TS01_TC009) | Successful login | Using correct facebook acount |
+| | | [TS01_TC004](#TS01_TC004) | Failed login | Using correct email and incorrect password |
+| | | [TS01_TC005](#TS01_TC005) | Failed login | Using incorrect email and correct password |
+| | | [TS01_TC006](#TS01_TC006) | Failed login | Using correct email and password with space key |
+| | | [TS01_TC007](#TS01_TC007) | Failed login | Using  email and password are left blank |
+| | | [TS01_TC008](#TS01_TC008) | Failed login | Using reverse data input |
 | [TS02](#TS02) | Check captcha functionality | | | |
+| | | [TS02_TC001](#TS02_TC001) | Captcha is visible | Using three times incorrect login |
+| | | [TS02_TC002](#TS02_TC002) | Captcha is visible | Using three times incorrect login, accept captcha, using one times incorrect login |
+| | | [TS02_TC003](#TS02_TC003) | Captcha is visible | Using two times incorrect login, correct login and logout, usig one times incorrect login |
 ***
     
-***
-| Test Scenario and Test Case id | Test Case name | Description |
-| --- | --- | --- |
-| [TS01_TC001](#TS01_TC001) | Successful login | Using correct username and password |
-| [TS01_TC002](#TS01_TC002) | Successful login | Using correct email and password |
-***
 
 ### Test Scenario TS01: Check Login Functionality <a name="TS01"></a>
     
-
 
 test_TS01_TC001_successful_login_with_username: <a name="TS01_TC001"></a>
 ```yaml
@@ -93,8 +96,8 @@ Expected results:
     Successful login with email
 ```
 
-test_TS01_TC003_successful_login_with_email_capitalizer:
-
+test_TS01_TC003_successful_login_with_email_capitalizer: <a name="TS01_TC003"></a>
+```yaml
 Preconditions:
     None
 
@@ -107,10 +110,10 @@ Steps:
 
 Expected results:
     Successful login with capitalizer email
+```
 
-
-test_TS01_TC004_failed_login_correct_email_and_incorrect_password:
-
+test_TS01_TC004_failed_login_correct_email_and_incorrect_password: <a name="TS01_TC004"></a>
+```yaml
 Preconditions:
     None
 
@@ -131,10 +134,10 @@ Steps:
 
 Expected results:
     Failed login
+```
 
-
-test_TS01_TC005_failed_login_incorrect_email_and_correct_password:
-
+test_TS01_TC005_failed_login_incorrect_email_and_correct_password: <a name="TS01_TC005"></a>
+```yaml
 Preconditions:
     None
 
@@ -152,10 +155,10 @@ Steps:
 
 Expected results:
     Failed login
+```
 
-
-test_TS01_TC006_failed_login_correct_email_and_password_with_space_key:
-
+test_TS01_TC006_failed_login_correct_email_and_password_with_space_key: <a name="TS01_TC006"></a>
+```yaml
 Preconditions:
     None
 
@@ -169,10 +172,10 @@ Steps:
 
 Expected results:
     Failed login
+```
 
-
-test_TS01_TC007_failed_login_email_and_password_are_left_blank:
-
+test_TS01_TC007_failed_login_email_and_password_are_left_blank: <a name="TS01_TC007"></a>
+```yaml
 Preconditions:
     None
 
@@ -187,10 +190,10 @@ Steps:
 
 Expected results:
     Failed login
+```
 
-
-test_TS01_TC008_failed_login_reverse_data_input:
-
+test_TS01_TC008_failed_login_reverse_data_input: <a name="TS01_TC008"></a>
+```yaml
 Preconditions:
     None
 
@@ -203,10 +206,10 @@ Steps:
 
 Expected results:
     Failed login
+```
 
-
-test_TS01_TC009_successful_login_with_facebook:
-
+test_TS01_TC009_successful_login_with_facebook: <a name="TS01_TC009"></a>
+```yaml
 Preconditions:
     None
 
@@ -222,14 +225,14 @@ Steps:
 
 Expected results:
     Successful login with email
-
+```
 
 
 ### Test Scenario TS02: Check captcha functionality <a name="TS02"></a>
 
  
-test_TS02_TC001_captcha_is_visible_after_three_times_incorrect_login:
-
+test_TS02_TC001_captcha_is_visible_after_three_times_incorrect_login: <a name="TS02_TC001"></a>
+```yaml
 Preconditions:
     None
 
@@ -244,10 +247,10 @@ Steps:
 
 Expected results:
     Captcha is visible
+```
 
-
-test_TS02_TC002_captcha_is_visible_again_after_one_times_incorrect_login:
-
+test_TS02_TC002_captcha_is_visible_again_after_one_times_incorrect_login: <a name="TS02_TC002"></a>
+```yaml
 Preconditions:
     None
  
@@ -261,10 +264,10 @@ Steps:
 
 Expected results:
     Captcha is visible
+```
 
-
-test_TS02_TC003_captcha_is_visible_after_three_times_incorrect_login_total_quantity:
-
+test_TS02_TC003_captcha_is_visible_after_three_times_incorrect_login_total_quantity: <a name="TS02_TC003"></a>
+```yaml
 Preconditions:
     None
  
