@@ -59,7 +59,7 @@ FireFox driver [geckodriver.exe] importand info:
 test_TS01_TC001_successful_login_with_username: <a name="TS01_TC001"></a>
 ```yaml
 Preconditions:
-    None
+    Registered and active user in the system
 
 Steps:
     1. Go to login page
@@ -80,7 +80,7 @@ Expected results:
 test_TS01_TC002_successful_login_with_email: <a name="TS01_TC002"></a>
 ```yaml
 Preconditions:
-    None
+    Registered and active user in the system
 
 Steps:
     1. Go to login page
@@ -99,7 +99,7 @@ Expected results:
 test_TS01_TC003_successful_login_with_email_capitalizer: <a name="TS01_TC003"></a>
 ```yaml
 Preconditions:
-    None
+    Registered and active user in the system
 
 Steps:
     1. Go to login page
@@ -110,6 +110,25 @@ Steps:
 
 Expected results:
     Successful login with capitalizer email
+```
+
+test_TS01_TC009_successful_login_with_facebook: <a name="TS01_TC009"></a>
+```yaml
+Preconditions:
+    Registered and active facebook user
+
+Steps:
+    1. Go to login page
+    2. Click on facebook butoon
+    3. Type correct "email"
+    4. Type correct "password"
+    5. Click on "Zaloguj" button
+    6. Click on icon account
+    7. Verify text link is "Moje dzieci" - in drop-down
+    8. Verify URL is "klub-logged-in/moj-klub-maluszka/"
+
+Expected results:
+    Successful login with email
 ```
 
 test_TS01_TC004_failed_login_correct_email_and_incorrect_password: <a name="TS01_TC004"></a>
@@ -206,25 +225,6 @@ Steps:
 
 Expected results:
     Failed login
-```
-
-test_TS01_TC009_successful_login_with_facebook: <a name="TS01_TC009"></a>
-```yaml
-Preconditions:
-    None
-
-Steps:
-    1. Go to login page
-    2. Click on facebook butoon
-    3. Type correct "email"
-    4. Type correct "password"
-    5. Click on "Zaloguj" button
-    6. Click on icon account
-    7. Verify text link is "Moje dzieci" - in drop-down
-    8. Verify URL is "klub-logged-in/moj-klub-maluszka/"
-
-Expected results:
-    Successful login with email
 ```
 
 
