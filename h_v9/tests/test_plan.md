@@ -34,12 +34,12 @@ FireFox driver [geckodriver.exe] importand info:
     FIREFOX_PATH = 'C:/Users/janis/PycharmProjects/h9/Page/Tests/Drivers/geckodriver.exe
     
 ***
-| Test Scenario id | Test Scenario name || Test Scenario and Test Case id | Test Case name | Description |
-| --- | --- || --- | --- | --- |
-| [TS01](#TS01) | Check Login Functionality || | | |
-| | || | [TS01_TC001](#TS01_TC001) | Successful login | Using correct username and password |
-| | || | | [TS01_TC002](#TS01_TC002) | Successful login | Using correct email and password |
-| [TS02](#TS02) | Check captcha functionality || | | |
+| Test Scenario id | Test Scenario name | Test Scenario and Test Case id | Test Case name | Description |
+| --- | --- | --- | --- | --- |
+| [TS01](#TS01) | Check Login Functionality | | | |
+| | | [TS01_TC001](#TS01_TC001) | Successful login | Using correct username and password |
+| | | [TS01_TC002](#TS01_TC002) | Successful login | Using correct email and password |
+| [TS02](#TS02) | Check captcha functionality | | | |
 ***
     
 ***
