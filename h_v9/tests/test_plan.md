@@ -33,6 +33,16 @@ FireFox driver [geckodriver.exe] importand info:
     
     FIREFOX_PATH = 'C:/Users/janis/PycharmProjects/h9/Page/Tests/Drivers/geckodriver.exe
     
+### System and Browsers
+
+- [x] WIN10 + Chrome 
+- [x] WIN10 + FireFox
+- [x] WIN10 + Internet Explorer
+- [x] Android + Chrome
+- [ ] iOS + Safari
+- [ ] iPad + Safari
+- [ ] macOS + Safari
+    
 ***
 | Test Scenario id | Test Scenario name | Test Scenario and Test Case id | Test Case name | Description |
 | --- | --- | --- | --- | --- |

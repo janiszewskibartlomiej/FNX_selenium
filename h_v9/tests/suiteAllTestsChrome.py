@@ -11,9 +11,9 @@ import HtmlTestRunner
 # sys.path.append(root_path2)
 # print(sys.path)
 
-from tests.test1412LoginSuccessfulChrome import LoginSuccessTestCase
-from tests.test1412LoginFailureChrome import LoginFailureTestCase
-from tests.test1416CaptchaChrome import CaptchaTestCase
+from tests.test_1412LoginSuccessfulChrome import LoginSuccessTestCase
+from tests.test_1412LoginFailureChrome import LoginFailureTestCase
+from tests.test_1416CaptchaChrome import CaptchaTestCase
 from concurrencytest import ConcurrentTestSuite, fork_for_tests
 from resources.test_data import Dev, Staging
 

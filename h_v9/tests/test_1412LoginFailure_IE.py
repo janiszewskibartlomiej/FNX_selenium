@@ -1,3 +1,4 @@
+import inspect
 import unittest
 import time
 from selenium import webdriver
@@ -28,6 +29,7 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
 
     def setUp(self):
         super().setUp()
+        time.sleep(3)
         self.login_page = LoginPage(self.driver)
         self.correct_email = CommonData.USER_EMAIL
         self.correct_password = CommonData.PASSWORD
@@ -35,7 +37,6 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
     def test_TS01_TC004_failed_login_correct_email_and_incorrect_password(self):
         try:
             password = CommonData.INCORRECT_PASSWORD_1
-            time.sleep(3)
             self.login_page.assert_path_in_current_url(path='/klub/zaloguj-sie')
             self.login_page.assert_elemnet_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
             self.login_page.login_as(username=self.correct_email, password=password, submit=True)
@@ -49,14 +50,16 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
             time.sleep(3)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             self.login_page.assert_elemnet_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
+
         except:
             self.login_page.do_screenshot(
-                name="test_TS01_TC004_", ie=True)
+                name=inspect.stack()[0][-3][:29] + inspect.stack()[0][1][-5:-3] + '_',
+                ie=True)
+
             raise
 
     def test_TS01_TC005_failed_login_incorrect_email_and_correct_password(self):
         try:
-            time.sleep(3)
             self.login_page.assert_path_in_current_url(path='/klub/zaloguj-sie')
             self.login_page.login_as(username=CommonData.INCORRECT_EMAIL_1, password=self.correct_password, submit=True)
             time.sleep(3)
@@ -67,9 +70,11 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
             time.sleep(3)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             self.login_page.assert_elemnet_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
+
         except:
             self.login_page.do_screenshot(
-                name="test_TS01_TC005_", ie=True)
+                name=inspect.stack()[0][-3][:29] + inspect.stack()[0][1][-5:-3] + '_',
+                ie=True)
             raise
 
     def test_TS01_TC006_failed_login_correct_email_and_password_with_space_key(self):
@@ -80,9 +85,11 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             time.sleep(3)
             self.login_page.assert_elemnet_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
+
         except:
             self.login_page.do_screenshot(
-                name="test_TS01_TC006_", ie=True)
+                name=inspect.stack()[0][-3][:29] + inspect.stack()[0][1][-5:-3] + '_',
+                ie=True)
             raise
 
     def test_TS01_TC007_failed_login_email_and_password_are_left_blank(self):
@@ -92,9 +99,11 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
             time.sleep(3)
             self.login_page.assert_path_in_current_url("/klub/zaloguj-sie")
             self.login_page.assert_elemnet_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
+
         except:
             self.login_page.do_screenshot(
-                name="test_TS01_TC007_", ie=True)
+                name=inspect.stack()[0][-3][:29] + inspect.stack()[0][1][-5:-3] + '_',
+                ie=True)
             raise
 
     def test_TS01_TC008_failed_login_reverse_data_input(self):
@@ -103,9 +112,11 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
             time.sleep(3)
             assert "Zaloguj" in self.login_page.driver.page_source
             self.login_page.assert_elemnet_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
+
         except:
             self.login_page.do_screenshot(
-                name="test_TS01_TC008_", ie=True)
+                name=inspect.stack()[0][-3][:29] + inspect.stack()[0][1][-5:-3] + '_',
+                ie=True)
             raise
 
 

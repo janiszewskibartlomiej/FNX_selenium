@@ -3,9 +3,9 @@ import os
 import unittest
 from datetime import date
 import HtmlTestRunner
-from tests.test1412LoginSuccessfulFireFox import LoginSuccessTestCase as  LoginSuccessFireFox
-from tests.test1412LoginFailureFireFox import LoginFailureTestCase as LoginFailureFireFox
-from tests.test1416CaptchaFireFox import CaptchaTestCase as CaptchaFireFox
+from tests.test_1412LoginSuccessfulFireFox import LoginSuccessTestCase as  LoginSuccessFireFox
+from tests.test_1412LoginFailureFireFox import LoginFailureTestCase as LoginFailureFireFox
+from tests.test_1416CaptchaFireFox import CaptchaTestCase as CaptchaFireFox
 from resources.test_data import Dev, Staging
 
 

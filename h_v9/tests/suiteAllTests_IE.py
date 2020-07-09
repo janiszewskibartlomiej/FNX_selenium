@@ -3,9 +3,9 @@ import os
 import unittest
 from datetime import date
 import HtmlTestRunner
-from tests.test1412LoginSuccessful_IE import LoginSuccessTestCase
-from tests.test1412LoginFailure_IE import LoginFailureTestCase
-from tests.test1416Captcha_IE import CaptchaTestCase
+from tests.test_1412LoginSuccessful_IE import LoginSuccessTestCase
+from tests.test_1412LoginFailure_IE import LoginFailureTestCase
+from tests.test_1416Captcha_IE import CaptchaTestCase
 from concurrencytest import ConcurrentTestSuite, fork_for_tests
 from resources.test_data import Dev, Staging
 

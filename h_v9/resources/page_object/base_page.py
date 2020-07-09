@@ -1,3 +1,4 @@
+import inspect
 from datetime import date
 import time
 import os
@@ -89,11 +90,12 @@ class BasePage:
         current_time = time.strftime("%H-%M-%S", t)
         path = f"reports/{current_date_template}/screenshot_{name}{current_time}.png"
         if ie:
-            root_path = os.getcwd()
-            root_path_slice = root_path.replace("tests", "")
-            root_path_rep = root_path_slice.replace("\\", "/")
-            path = f"{root_path_rep}reports/{current_date_template}/screenshot_{name}{current_time}.png"
+            # root_path = os.getcwd()  NOW IS NOT NESSERY BECAUSE I SET PYTHONPATH TO h_v9
+            # root_path_slice = root_path.replace("tests", "")
+            # root_path_rep = root_path_slice.replace("\\", "/")
+            # path = f"{root_path_rep}reports/{current_date_template}/screenshot_{name}{current_time}.png"
             self.driver.get_screenshot_as_file(path)
         else:
             self.driver.find_element_by_tag_name('body').screenshot(path)
             self.driver.set_window_size(original_size['width'], original_size['height'])
+
