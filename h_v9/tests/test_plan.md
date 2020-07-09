@@ -46,7 +46,7 @@ FireFox driver [geckodriver.exe] importand info:
 ***
 | Test Scenario id | Test Scenario name | Test Scenario and Test Case id | Test Case name | Description |
 | --- | --- | --- | --- | --- |
-| [TS01](#TS01) | Check Login Functionality | | | |
+| [TS01](#TS01) | Check login functionality | | | |
 | | | [TS01_TC001](#TS01_TC001) | Successful login | Using correct username and password |
 | | | [TS01_TC002](#TS01_TC002) | Successful login | Using correct email and password |
 | | | [TS01_TC003](#TS01_TC003) | Successful login | Using correct email and password - capitalizer |
@@ -60,6 +60,7 @@ FireFox driver [geckodriver.exe] importand info:
 | | | [TS02_TC001](#TS02_TC001) | Captcha is visible | Using three times incorrect login |
 | | | [TS02_TC002](#TS02_TC002) | Captcha is visible | Using three times incorrect login, accept captcha, using one times incorrect login |
 | | | [TS02_TC003](#TS02_TC003) | Captcha is visible | Using two times incorrect login, correct login and logout, usig one times incorrect login |
+| [TS03](#TS03) | Check  my children functionality | | | |
 ***
     
 
