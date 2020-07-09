@@ -43,7 +43,7 @@ FireFox driver [geckodriver.exe] importand info:
 ***
 | Test Scenario and Test Case id | Test Case name | Description | Preconditions | Steps | Expected results |
 | --- | --- | --- | --- | --- | --- |
-| [TS01_TC001](#TS01_TC001) | Successful login | Using correct username and password | none | 1. Go to login page 2. Verify by url if login page is show 3. Try to login with correct username and password 4. Verify by url if club page is show 5. Click on icon account 6. Verify logout button is visible 7. Verify text button is "Wyloguj" 8. Click on logout button 9. Verify login button is visible 10. Verify text button is "zaloguj" | Successful login with user name |
+| [TS01_TC001](#TS01_TC001) | Successful login | Using correct username and password | none | 1. Go to login page \n2. Verify by url if login page is show \n3. Try to login with correct username and password 4. Verify by url if club page is show 5. Click on icon account 6. Verify logout button is visible 7. Verify text button is "Wyloguj" 8. Click on logout button 9. Verify login button is visible 10. Verify text button is "zaloguj" | Successful login with user name |
 | [TS01_TC002](#TS01_TC002) | Successful login | Using correct email and password | none | test | test|
 ***
 
