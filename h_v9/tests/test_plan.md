@@ -46,7 +46,7 @@ FireFox driver [geckodriver.exe] importand info:
 ***
 | Test Scenario id | Test Scenario name | Test Scenario and Test Case id | Test Case name | Description |
 | --- | --- | --- | --- | --- |
-| [TS01](#TS01) | Check Login Functionality | | | |
+| [TS01](#TS01) | Check login functionality | | | |
 | | | [TS01_TC001](#TS01_TC001) | Successful login | Using correct username and password |
 | | | [TS01_TC002](#TS01_TC002) | Successful login | Using correct email and password |
 | | | [TS01_TC003](#TS01_TC003) | Successful login | Using correct email and password - capitalizer |
@@ -60,6 +60,7 @@ FireFox driver [geckodriver.exe] importand info:
 | | | [TS02_TC001](#TS02_TC001) | Captcha is visible | Using three times incorrect login |
 | | | [TS02_TC002](#TS02_TC002) | Captcha is visible | Using three times incorrect login, accept captcha, using one times incorrect login |
 | | | [TS02_TC003](#TS02_TC003) | Captcha is visible | Using two times incorrect login, correct login and logout, usig one times incorrect login |
+| [TS03](#TS03) | Check  my children functionality | | | |
 ***
     
 
@@ -294,4 +295,70 @@ Steps:
 
 Expected results:
     Captcha is visible
+```
+
+### Test Scenario TS03: Check  my children functionality <a name="TS03"></a>
+
+test_TS03_TC001_successful_adding_pregnancy_with_no_gender: <a name="TS01_TC001"></a>
+```yaml
+Preconditions:
+     Registered, active user in the system and login
+ 
+Steps:
+    1. Go to add baby page
+    2. Verify current url is '/profil-uzytkownika/dodaj-dziecko'
+    3. Click on "Dodaj dziecko"
+    4. Verify color of "Jestem w ciąży" == red
+    5. Click on "Jestem w ciąży"
+    6. Click on "Dodaj dziecko"
+    7. Verify color of "Nieznana" == red
+    8. Click on "Nieznana"
+    9. Verify select day is clickable and set day = random number
+    10. Verify select month is clickable and set month = current month + 1
+    11. Verify select year is clickable and set year =  current year
+    12. Verify section of registration gift is visible
+    13. Click on "Dodaj dziecko"
+    14. Verify current url is '/profil-uzytkownika/lista-dzieci'
+    15. Verify img stork is visible
+    16. Verify name is "nieznane"
+    17. Verify link text is visibe = 'Potwierdź datę urodzenia dziecka'
+    18. Verify date of brirth is like random_number.current_month_pus_one.current_year
+    19. Verify gender is 'Nieznana'
+    20. Verify gift for childbirth  is 'NIE'
+
+Expected results:
+    All test steps passed as excepted
+```
+
+test_TS03_TC002_successful_adding_pregnancy_with_female <a name="TS01_TC002"></a>
+```yaml
+Preconditions:
+     Registered, active user in the system and login
+ 
+Steps:
+    1. Go to add baby page
+    2. Verify current url is '/profil-uzytkownika/dodaj-dziecko'
+    3. Click on "Dodaj dziecko"
+    4. Verify color of "Jestem w ciąży" == red
+    5. Click on "Jestem w ciąży"
+    6. Click on "Dodaj dziecko"
+    7. Verify color of "Dziewczynka" == red
+    8. Click on "Dziewczynka"
+    9. Verify select day is clickable and set day = current day
+    10. Verity alert 'Pole jest wymagane' is visible 
+    10. Verify select month is clickable and set month = current month
+    11. Verify select year is clickable and set year =  current year
+    12. Verify section of registration gift is visible
+    13. Type name and click Enter key
+    14. Verify current url is '/profil-uzytkownika/lista-dzieci'
+    15. Verify img stork is visible
+    16. Verify name is enter name from no 13
+    17. Verify link text is visibe = 'Potwierdź datę urodzenia dziecka'
+    18. Verify date of brirth is like current_day.current_month.current_year
+    19. Verify gender is 'Dziewczynka'
+    20. Verify gender 'Nieznana' is not in page source 
+    21. Verify gift for childbirth  is 'NIE'
+
+Expected results:
+    All test steps passed as excepted
 ```
