@@ -46,11 +46,11 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
             self.login_page.assert_path_in_current_url(path=self.after_login_url)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             assert self.login_page.element_is_visible(LoginPageLocators.LOGOUT_BUTTON) is True
-            self.login_page.assert_elemnet_text(LoginPageLocators.LOGOUT_BUTTON, "Wyloguj")
+            self.login_page.assert_element_text(LoginPageLocators.LOGOUT_BUTTON, "Wyloguj")
             self.login_page.click_on(LoginPageLocators.LOGOUT_BUTTON)
             time.sleep(3)
             assert self.login_page.element_is_visible(LoginPageLocators.SUBMIT_BTN) is True
-            self.login_page.assert_elemnet_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
+            self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
 
         except:
             self.login_page.do_screenshot(
@@ -72,11 +72,11 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
             self.login_page.assert_path_in_current_url(path=self.after_login_url)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             time.sleep(3)
-            self.login_page.assert_elemnet_text(LoginPageLocators.LOGOUT_BUTTON, logout_text)
+            self.login_page.assert_element_text(LoginPageLocators.LOGOUT_BUTTON, logout_text)
             self.assertTrue(logout_text in self.login_page.driver.page_source)
             self.login_page.click_on(LoginPageLocators.LOGOUT_BUTTON)
             time.sleep(3)
-            self.login_page.assert_elemnet_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
+            self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
 
         except:
             self.login_page.do_screenshot(
@@ -93,7 +93,7 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
             self.login_page.is_clickable(by_locator=HomePageLocators.ICON_ACCOUNT)
             time.sleep(3)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
-            time.sleep(3)
+            time.sleep(5)
             drop_down = self.login_page.get_element(by_locator=LoginPageLocators.DROP_DOWN_SECTION)
             assert text_in_dropdown in drop_down.get_attribute("innerHTML")
             assert text_in_dropdown in self.login_page.driver.page_source
@@ -115,14 +115,13 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
                                        text=CommonData.FACEBOOK_PASSWORD)
             time.sleep(1)
             self.login_page.click_on(by_loctor=LoginPageLocators.FACEBOOK_LOGIN_BTN)
-            time.sleep(3)
+            time.sleep(5)
             self.login_page.click_on(by_loctor=LoginPageLocators.ICON_ACCOUNT)
             time.sleep(3)
             assert link_text in self.login_page.driver.page_source
-            self.login_page.assert_elemnet_text(by_locator=LoginPageLocators.MY_CHILDREN_LINK_TEXT,
+            self.login_page.assert_element_text(by_locator=LoginPageLocators.MY_CHILDREN_LINK_TEXT,
                                                 element_text=link_text)
-            time.sleep(3)
-            self.login_page.assert_path_in_current_url(path="klub-logged-in/moj-klub-maluszka/")
+            self.login_page.assert_path_in_current_url(path=self.after_login_url)
 
         except:
             self.login_page.do_screenshot(

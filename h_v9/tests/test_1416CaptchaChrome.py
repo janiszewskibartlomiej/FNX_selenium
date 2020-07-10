@@ -66,7 +66,7 @@ class CaptchaTestCase(CaptchaTestCaseBase):
             self.login_page.login_as(username=user, password=password, submit=True)
             self.login_page.assert_path_in_current_url(path='/walidacja')
             captcha_text = 'reCAPTCHA'
-            self.login_page.assert_elemnet_text(LoginPageLocators.CAPTCHA_SECTION, element_text=captcha_text)
+            self.login_page.assert_element_text(LoginPageLocators.CAPTCHA_SECTION, element_text=captcha_text)
             assert captcha_text in self.login_page.driver.page_source
             self.login_page.click_on(LoginPageLocators.CAPTCHA_SECTION)
 
@@ -82,11 +82,11 @@ class CaptchaTestCase(CaptchaTestCaseBase):
             self.login_page.login_as(username=username, password=password)
             time.sleep(1)
             self.login_page.login_as(username=username, password=password)
-            self.login_page.assert_elemnet_text(by_locator=LoginPageLocators.SUBMIT_BTN, element_text="Zaloguj")
+            self.login_page.assert_element_text(by_locator=LoginPageLocators.SUBMIT_BTN, element_text="Zaloguj")
             self.login_page.login_as(username=CommonData.USER_EMAIL, password=CommonData.PASSWORD)
             self.login_page.click_on(by_loctor=HomePageLocators.ICON_ACCOUNT)
             time.sleep(1)
-            self.login_page.assert_elemnet_text(by_locator=LoginPageLocators.MY_PROFILE, element_text="Mój profil")
+            self.login_page.assert_element_text(by_locator=LoginPageLocators.MY_PROFILE, element_text="Mój profil")
             self.login_page.click_on(by_loctor=LoginPageLocators.LOGOUT_BUTTON)
             time.sleep(1)
             self.login_page.login_as(username=username, password=password)

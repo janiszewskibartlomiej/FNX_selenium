@@ -38,18 +38,18 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
         try:
             password = CommonData.INCORRECT_PASSWORD_1
             self.login_page.assert_path_in_current_url(path='/klub/zaloguj-sie')
-            self.login_page.assert_elemnet_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
+            self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
             self.login_page.login_as(username=self.correct_email, password=password, submit=True)
             time.sleep(3)
             self.login_page.assert_path_in_current_url(path='/klub/zaloguj-sie')
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             assert self.login_page.element_is_visible(HomePageLocators.LOGIN_BUTTON) is True
-            self.login_page.assert_elemnet_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
+            self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
             password = CommonData.INCORRECT_PASSWORD_2
             self.login_page.login_as(username=self.correct_email, password=password, submit=False)
             time.sleep(3)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
-            self.login_page.assert_elemnet_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
+            self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
 
         except:
             self.login_page.do_screenshot(
@@ -69,7 +69,7 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
                                      submit=False)
             time.sleep(3)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
-            self.login_page.assert_elemnet_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
+            self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
 
         except:
             self.login_page.do_screenshot(
@@ -84,7 +84,7 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
             time.sleep(5)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             time.sleep(3)
-            self.login_page.assert_elemnet_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
+            self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
 
         except:
             self.login_page.do_screenshot(
@@ -98,7 +98,7 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
             self.login_page.enter_text_and_click_enter(LoginPageLocators.PASSWORD_FIELD, "")
             time.sleep(3)
             self.login_page.assert_path_in_current_url("/klub/zaloguj-sie")
-            self.login_page.assert_elemnet_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
+            self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
 
         except:
             self.login_page.do_screenshot(
@@ -111,7 +111,7 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
             self.login_page.login_as(username=self.correct_password, password=self.correct_email, submit=False)
             time.sleep(3)
             assert "Zaloguj" in self.login_page.driver.page_source
-            self.login_page.assert_elemnet_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
+            self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
 
         except:
             self.login_page.do_screenshot(

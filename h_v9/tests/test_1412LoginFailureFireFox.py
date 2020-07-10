@@ -17,6 +17,10 @@ class LoginFailureTestCaseBase(unittest.TestCase):
     def setUp(self) -> None:
         profile = webdriver.FirefoxProfile()
         profile.accept_untrusted_certs = True
+        profile.set_preference("browser.cache.disk.enable", False)
+        profile.set_preference("browser.cache.memory.enable", False)
+        profile.set_preference("browser.cache.offline.enable", False)
+        profile.set_preference("network.http.use-cache", False)
         firefox_options = webdriver.FirefoxOptions()
         firefox_options.add_argument('--headless')
         self.driver = webdriver.Firefox(executable_path=CommonData.FIREFOX_PATH, firefox_profile=profile,
@@ -42,16 +46,16 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
             self.login_page.assert_path_in_current_url(path='/klub/zaloguj-sie')
             password = CommonData.INCORRECT_PASSWORD_1
             self.login_page.assert_path_in_current_url(path='/klub/zaloguj-sie')
-            self.login_page.assert_elemnet_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
+            self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
             self.login_page.login_as(username=self.correct_email, password=password, submit=True)
             self.login_page.assert_path_in_current_url(path='/klub/zaloguj-sie')
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             assert self.login_page.element_is_visible(HomePageLocators.LOGIN_BUTTON) is True
-            self.login_page.assert_elemnet_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
+            self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
             password = CommonData.INCORRECT_PASSWORD_2
             self.login_page.login_as(username=self.correct_email, password=password, submit=False)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
-            self.login_page.assert_elemnet_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
+            self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
 
         except:
             self.login_page.do_screenshot(
@@ -67,7 +71,7 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
             self.login_page.login_as(username=CommonData.INCORRECT_EMAIL_2, password=self.correct_password,
                                      submit=False)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
-            self.login_page.assert_elemnet_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
+            self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
 
         except:
             self.login_page.do_screenshot(
@@ -81,7 +85,7 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
             time.sleep(3)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             time.sleep(3)
-            self.login_page.assert_elemnet_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
+            self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
 
         except:
             self.login_page.do_screenshot(
@@ -93,7 +97,7 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
             self.login_page.click_on(LoginPageLocators.USERNAME_FIELD)
             self.login_page.enter_text_and_click_enter(LoginPageLocators.PASSWORD_FIELD, "")
             self.login_page.assert_path_in_current_url("/klub/zaloguj-sie")
-            self.login_page.assert_elemnet_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
+            self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
 
         except:
             self.login_page.do_screenshot(
@@ -104,7 +108,7 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
         try:
             self.login_page.login_as(username=self.correct_password, password=self.correct_email, submit=False)
             assert "Zaloguj" in self.login_page.driver.page_source
-            self.login_page.assert_elemnet_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
+            self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
 
         except:
             self.login_page.do_screenshot(

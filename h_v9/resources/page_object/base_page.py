@@ -1,4 +1,5 @@
 import inspect
+import random
 from datetime import date
 import time
 import os
@@ -22,10 +23,11 @@ class BasePage:
         self.base_url = Staging.ACCESS
 
     def click_on(self, by_loctor):
-        return WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located(by_loctor)).click()
+        web_element = WebDriverWait(self.driver, 50).until(EC.visibility_of_element_located(by_loctor))
+        return web_element.click()
 
-    def assert_elemnet_text(self, by_locator, element_text):
-        web_element = WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located(by_locator))
+    def assert_element_text(self, by_locator, element_text):
+        web_element = WebDriverWait(self.driver, 50).until(EC.visibility_of_element_located(by_locator))
         assert web_element.text == element_text
 
     def assert_path_in_current_url(self, path):
@@ -33,31 +35,32 @@ class BasePage:
         assert path in current_url
 
     def enter_text(self, by_locator, text):
-        element = WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located(by_locator))
+        element = WebDriverWait(self.driver, 50).until(EC.visibility_of_element_located(by_locator))
         element.clear()
         return element.send_keys(text)
 
     def enter_text_and_click_enter(self, by_locators, text):
-        element = WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located(by_locators))
+        element = WebDriverWait(self.driver, 50).until(EC.visibility_of_element_located(by_locators))
         element.clear()
         return element.send_keys(text + Keys.ENTER)
 
     def is_clickable(self, by_locator):
-        return WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable(by_locator))
+        element = WebDriverWait(self.driver, 50).until(EC.element_to_be_clickable(by_locator))
+        return bool(element)
 
     def element_is_visible(self, by_locator):
-        element = WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located(by_locator))
+        element = WebDriverWait(self.driver, 50).until(EC.visibility_of_element_located(by_locator))
         return bool(element)
 
     def get_element(self, by_locator):
-        return WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located(by_locator))
+        return WebDriverWait(self.driver, 50).until(EC.visibility_of_element_located(by_locator))
 
     def hover_to(self, by_locator):
-        element = WebDriverWait(self.driver, 30).until(EC.visibility_of_element_located(by_locator))
+        element = WebDriverWait(self.driver, 50).until(EC.visibility_of_element_located(by_locator))
         return ActionChains(self.driver).move_to_element(element).perform()
 
     def choose(self, drop_down_select, name):
-        drop_down = WebDriverWait(self, 30).until(EC.visibility_of_element_located(drop_down_select))
+        drop_down = WebDriverWait(self, 50).until(EC.visibility_of_element_located(drop_down_select))
         drop_down.find_element(By.NAME(name)).click()
 
     def quit(self):
@@ -74,6 +77,24 @@ class BasePage:
 
     def get_current_url(self):
         return self.driver.current_url
+
+    def get_random_number(self, today=False):
+        if today:
+            current_day = date.today()
+            str_number = (str(current_day))[-2:]
+        else:
+            random_number = random.randint(1, 29)
+            str_number = str(random_number)
+            if len(str_number) < 2:
+                str_number = '0' + str_number
+        return str_number
+
+    def get_month_number(self, add_number=0):
+        month_number = date.today().month + add_number
+        str_next_month = str(month_number)
+        if len(str_next_month) < 2:
+            str_next_month = '0' + str_next_month
+        return str_next_month
 
     def do_screenshot(self, name, ie=False):
         original_size = self.driver.get_window_size()
@@ -98,4 +119,3 @@ class BasePage:
         else:
             self.driver.find_element_by_tag_name('body').screenshot(path)
             self.driver.set_window_size(original_size['width'], original_size['height'])
-

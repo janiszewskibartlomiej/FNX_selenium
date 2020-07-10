@@ -14,6 +14,7 @@ import HtmlTestRunner
 from tests.test_1412LoginSuccessfulChrome import LoginSuccessTestCase
 from tests.test_1412LoginFailureChrome import LoginFailureTestCase
 from tests.test_1416CaptchaChrome import CaptchaTestCase
+from tests.test_11419Add_babySuccessfulChrome import AddBabySuccessTestCase
 from concurrencytest import ConcurrentTestSuite, fork_for_tests
 from resources.test_data import Dev, Staging
 
@@ -37,6 +38,10 @@ def suite():
     suite.addTest(CaptchaTestCase('test_TS02_TC001_captcha_is_visible_after_three_times_incorect_login'))
     suite.addTest(CaptchaTestCase('test_TS02_TC002_captcha_is_visible_again_after_one_times_incorect_login'))
     suite.addTest(CaptchaTestCase('test_TS02_TC003_captcha_is_visible_after_three_times_incorrect_login_total_quantity'))
+
+    # Add baby
+    suite.addTest(AddBabySuccessTestCase('test_TS03_TC001_successful_adding_pregnancy_with_no_gender'))
+    suite.addTest(AddBabySuccessTestCase('test_TS03_TC002_successful_adding_pregnancy_with_female'))
 
     return suite
 

@@ -13,6 +13,10 @@ class CaptchaTestCaseBase(unittest.TestCase):
     def setUp(self) -> None:
         profile = webdriver.FirefoxProfile()
         profile.accept_untrusted_certs = True
+        profile.set_preference("browser.cache.disk.enable", False)
+        profile.set_preference("browser.cache.memory.enable", False)
+        profile.set_preference("browser.cache.offline.enable", False)
+        profile.set_preference("network.http.use-cache", False)
         firefox_options = webdriver.FirefoxOptions()
         firefox_options.add_argument('--headless')
         self.driver = webdriver.Firefox(executable_path=CommonData.FIREFOX_PATH, firefox_profile=profile,
@@ -67,7 +71,7 @@ class CaptchaTestCase(CaptchaTestCaseBase):
             self.login_page = LoginPage(self.driver)
             self.login_page.login_as(username=user, password=password, submit=True)
             self.login_page.assert_path_in_current_url(path='/walidacja')
-            self.login_page.assert_elemnet_text(LoginPageLocators.CAPTCHA_SECTION, element_text='reCAPTCHA')
+            self.login_page.assert_element_text(LoginPageLocators.CAPTCHA_SECTION, element_text='reCAPTCHA')
             self.login_page.click_on(LoginPageLocators.CAPTCHA_SECTION)
 
         except:
@@ -81,10 +85,10 @@ class CaptchaTestCase(CaptchaTestCaseBase):
             password = 'Select1%'
             self.login_page.login_as(username=username, password=password)
             self.login_page.login_as(username=username, password=password)
-            self.login_page.assert_elemnet_text(by_locator=LoginPageLocators.SUBMIT_BTN, element_text="Zaloguj")
+            self.login_page.assert_element_text(by_locator=LoginPageLocators.SUBMIT_BTN, element_text="Zaloguj")
             self.login_page.login_as(username=CommonData.USER_EMAIL, password=CommonData.PASSWORD)
             self.login_page.click_on(by_loctor=HomePageLocators.ICON_ACCOUNT)
-            self.login_page.assert_elemnet_text(by_locator=LoginPageLocators.MY_PROFILE, element_text="Mój profil")
+            self.login_page.assert_element_text(by_locator=LoginPageLocators.MY_PROFILE, element_text="Mój profil")
             self.login_page.click_on(by_loctor=LoginPageLocators.LOGOUT_BUTTON)
             self.login_page.login_as(username=username, password=password)
             self.login_page.click_on(by_loctor=LoginPageLocators.CAPTCHA_SECTION)

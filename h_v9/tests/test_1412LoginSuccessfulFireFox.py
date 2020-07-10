@@ -19,6 +19,10 @@ class LoginSuccessTestCaseBase(unittest.TestCase):
     def setUp(self) -> None:
         profile = webdriver.FirefoxProfile()
         profile.accept_untrusted_certs = True
+        profile.set_preference("browser.cache.disk.enable", False)
+        profile.set_preference("browser.cache.memory.enable", False)
+        profile.set_preference("browser.cache.offline.enable", False)
+        profile.set_preference("network.http.use-cache", False)
         firefox_options = webdriver.FirefoxOptions()
         firefox_options.add_argument('--headless')
         self.driver = webdriver.Firefox(executable_path=CommonData.FIREFOX_PATH, firefox_profile=profile,
@@ -48,10 +52,11 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
             self.login_page.assert_path_in_current_url(path=self.after_login_url)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             assert self.login_page.element_is_visible(LoginPageLocators.LOGOUT_BUTTON) is True
-            self.login_page.assert_elemnet_text(LoginPageLocators.LOGOUT_BUTTON, "Wyloguj")
+            self.login_page.assert_element_text(LoginPageLocators.LOGOUT_BUTTON, "Wyloguj")
             self.login_page.click_on(LoginPageLocators.LOGOUT_BUTTON)
+            time.sleep(3)
             assert self.login_page.element_is_visible(LoginPageLocators.SUBMIT_BTN) is True
-            self.login_page.assert_elemnet_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
+            self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
 
         except:
             self.login_page.do_screenshot(
@@ -72,11 +77,10 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
             time.sleep(3)
             self.login_page.assert_path_in_current_url(path=self.after_login_url)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
-            self.login_page.assert_elemnet_text(LoginPageLocators.LOGOUT_BUTTON, logout_text)
+            self.login_page.assert_element_text(LoginPageLocators.LOGOUT_BUTTON, logout_text)
             self.assertTrue(logout_text in self.login_page.driver.page_source)
             self.login_page.click_on(LoginPageLocators.LOGOUT_BUTTON)
-            time.sleep(1)
-            self.login_page.assert_elemnet_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
+            self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
 
         except:
             self.login_page.do_screenshot(
@@ -108,11 +112,12 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
             self.login_page.enter_text(by_locator=LoginPageLocators.FACEBOOK_PASSWORD,
                                        text=CommonData.FACEBOOK_PASSWORD)
             self.login_page.click_on(by_loctor=LoginPageLocators.FACEBOOK_LOGIN_BTN)
+            time.sleep(3)
             assert link_text in self.login_page.driver.page_source
             self.login_page.click_on(by_loctor=LoginPageLocators.ICON_ACCOUNT)
-            self.login_page.assert_elemnet_text(by_locator=LoginPageLocators.MY_CHILDREN_LINK_TEXT,
+            self.login_page.assert_element_text(by_locator=LoginPageLocators.MY_CHILDREN_LINK_TEXT,
                                                 element_text=link_text)
-            self.login_page.assert_path_in_current_url(path="klub-logged-in/moj-klub-maluszka/")
+            self.login_page.assert_path_in_current_url(path=self.after_login_url)
 
         except:
             self.login_page.do_screenshot(
