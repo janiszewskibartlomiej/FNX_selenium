@@ -1,8 +1,10 @@
 import inspect
 import random
-from datetime import date
+import sys
+from datetime import date, datetime, timedelta
 import time
 import os
+
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -52,6 +54,10 @@ class BasePage:
         element = WebDriverWait(self.driver, 50).until(EC.visibility_of_element_located(by_locator))
         return bool(element)
 
+    def element_is_not_visible(self, by_locator):
+        element = WebDriverWait(self.driver, 50).until(EC.invisibility_of_element_located(by_locator))
+        return bool(element)
+
     def get_element(self, by_locator):
         return WebDriverWait(self.driver, 50).until(EC.visibility_of_element_located(by_locator))
 
@@ -78,6 +84,60 @@ class BasePage:
     def get_current_url(self):
         return self.driver.current_url
 
+    def get_path_from_name(self, file_name):
+        for root, dirs, files in os.walk(sys.path[1]):
+            for file in files:
+                if file == file_name:
+                    path = os.path.join(root, file)
+                    return path
+
+    def get_random_firstname_from_csv(self, path):
+        # ROOT_DIR = os.path.abspath(os.curdir)
+        with open(file=str(path), encoding='utf8', mode='r') as file:
+            first_name = file.read().splitlines()
+            random_name = random.choice(first_name)
+            return random_name
+
+    def get_random_town_name_from_csv(self, path):
+        with open(file=str(path), encoding='utf8', mode='r') as file:
+            town_list = file.read().splitlines()
+            random_town_data = random.choice(town_list)
+            random_town_name = random_town_data.split(";")
+            return random_town_name[1]
+
+    def get_random_street_name_from_csv(self, path):
+        with open(file=str(path), encoding='utf8', mode='r') as file:
+            street_list = file.read().splitlines()
+            random_street_data = random.choice(street_list)
+            random_street_name = random_street_data.split(";")
+            return random_street_name[7]
+
+    def get_date_from_delta_n_day(self, add_days):
+        today = datetime.today()
+        future_date = today + timedelta(days=add_days)
+        date_slice = datetime.strftime(future_date, "%Y-%m-%d")
+        date_dict = {
+            "day": date_slice[-2:],
+            "month": date_slice[5:7],
+            "year": date_slice[:4]
+        }
+        return date_dict
+
+    def get_random_post_code_and_town_name_from_csv(self):
+        path = self.get_path_from_name(file_name='kody.csv')
+        with open(file=str(path), encoding='utf8', mode='r') as file:
+            data_list = file.read().splitlines()
+            random_data = random.choice(data_list)
+            random_data_split = random_data.split(";")
+            post_code = random_data_split[0]
+            street_name = random_data_split[1]
+            town_name = random_data_split[2]
+            address_dict = {
+                "post_code": post_code,
+                "town_name": town_name
+            }
+            return address_dict
+
     def get_random_number(self, today=False):
         if today:
             current_day = date.today()
@@ -88,6 +148,16 @@ class BasePage:
             if len(str_number) < 2:
                 str_number = '0' + str_number
         return str_number
+
+    def get_random_street_number(self):
+        random_number = random.randint(1, 1000)
+        char_list = ["", "", "B", "", "A", "", ""]
+        random_char = random.choice(char_list)
+        return str(random_number) + random_char
+
+    def get_random_phone_number(self):
+        sequence_list = random.sample(range(100, 999), 3)
+        return f"{sequence_list[0]} {sequence_list[1]} {sequence_list[2]}"
 
     def get_month_number(self, add_number=0):
         month_number = date.today().month + add_number
@@ -119,3 +189,7 @@ class BasePage:
         else:
             self.driver.find_element_by_tag_name('body').screenshot(path)
             self.driver.set_window_size(original_size['width'], original_size['height'])
+
+
+if __name__ == '__main__':
+    BasePage().get_path()
