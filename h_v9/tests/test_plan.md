@@ -395,13 +395,48 @@ Steps:
     21. Verify alert icon and text is visible
     22. Verify img stork is visible
     23. Verify "Imię nieznane" is not in page source
-    24. Verify name is the entered name from no 13
+    24. Verify name is the same like entered in no 13
     25. Verify name from no 13 is visible in triangle
     26. Verify text 'Potwierdź datę urodzenia dziecka' is not in page source
     27. Verify date of brirth is like no10.no11.no12
     28. Verify gender is 'Chłopiec'
     29. Verify gender 'Nieznana' is not in page source 
     30. Verify gift for childbirth  is 'TAK'
+
+Expected results:
+    All test steps passed as excepted
+```
+
+test_TS03_TC004_successful_adding_baby_born_with_male <a name="TS03_TC004"></a>
+```yaml
+Preconditions:
+     Registered, active user in the system and login
+ 
+Steps:
+    1. Go to add baby page
+    2. Verify current url is '/profil-uzytkownika/dodaj-dziecko'
+    3. Click on "Dodaj dziecko"
+    4. Verify color of "Mam już dziecko" == red
+    5. Click on "Mam już dziecko"
+    6. Click on "Dodaj dziecko"
+    7. Verify color of "Chłopiec" == red
+    8. Click on "Chłopiec"
+    9. Verify alert 'Pole jest wymagane' is visible 
+    10. Verify select day is clickable and set day = past day  [from (curent date - 1095 day)]
+    11. Verify select month is clickable and set month = past month [from (curent date -1095 day)]
+    12. Verify select year is clickable and set year =  past year [from (curent date - 1095 day)]
+    13. Type random name from csv file 
+    14. Click on "Dodaj dziecko"
+    15. Verify current url is '/profil-uzytkownika/lista-dzieci'
+    16. Verify alert icon and text is visible
+    17. Verify img stork is not visible and not in page source
+    18. Verify "Imię nieznane" is not in page source
+    19. Verify name is visible and the same like entered in no 13
+    20. Verify text 'Potwierdź datę urodzenia dziecka' is not in page source
+    21. Verify date of brirth is like no10.no11.no12
+    28. Verify gender is 'Chłopiec'
+    29. Verify gender 'Nieznana' is not in page source 
+    30. Verify gift for childbirth  is 'NIE'
 
 Expected results:
     All test steps passed as excepted
