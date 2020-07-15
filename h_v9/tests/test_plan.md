@@ -347,26 +347,26 @@ Steps:
     6. Click on "Dodaj dziecko"
     7. Verify color of "Dziewczynka" == red
     8. Click on "Dziewczynka"
-    9. Verify select day is clickable and set day = current day
-    10. Verity alert 'Pole jest wymagane' is visible 
-    10. Verify select month is clickable and set month = current month
-    11. Verify select year is clickable and set year =  current year
-    12. Verify section of registration gift is visible
-    13. Type name and click Enter key
-    14. Verify current url is '/profil-uzytkownika/lista-dzieci'
-    15. Verify img stork is visible
-    16. Verify name is enter name from no 13
-    17. Verify link text is visibe = 'Potwierdź datę urodzenia dziecka'
-    18. Verify date of brirth is like current_day.current_month.current_year
-    19. Verify gender is 'Dziewczynka'
-    20. Verify gender 'Nieznana' is not in page source 
-    21. Verify gift for childbirth  is 'NIE'
+    9. Verity alert 'Pole jest wymagane' is visible 
+    10. Verify select day is clickable and set day = current day
+    11. Verify select month is clickable and set month = current month
+    12. Verify select year is clickable and set year =  current year
+    13. Verify section of registration gift is visible
+    14. Type random name from csv file and click Enter key
+    15. Verify current url is '/profil-uzytkownika/lista-dzieci'
+    16. Verify img stork is visible
+    17. Verify name is enter name from no 13
+    18. Verify link text is visibe = 'Potwierdź datę urodzenia dziecka'
+    19. Verify date of brirth is like current_day.current_month.current_year
+    20. Verify gender is 'Dziewczynka'
+    21. Verify gender 'Nieznana' is not in page source 
+    22. Verify gift for childbirth  is 'NIE'
 
 Expected results:
     All test steps passed as excepted
 ```
 
-test_TS03_TC003_successful_adding_pregnancy_with_female <a name="TS03_TC003"></a>
+test_TS03_TC003_successful_adding_pregnancy_with_male <a name="TS03_TC003"></a>
 ```yaml
 Preconditions:
      Registered, active user in the system and login
@@ -378,22 +378,30 @@ Steps:
     4. Verify color of "Jestem w ciąży" == red
     5. Click on "Jestem w ciąży"
     6. Click on "Dodaj dziecko"
-    7. Verify color of "Dziewczynka" == red
-    8. Click on "Dziewczynka"
-    9. Verify select day is clickable and set day = current day
-    10. Verity alert 'Pole jest wymagane' is visible 
-    10. Verify select month is clickable and set month = current month
-    11. Verify select year is clickable and set year =  current year
-    12. Verify section of registration gift is visible
-    13. Type name and click Enter key
-    14. Verify current url is '/profil-uzytkownika/lista-dzieci'
-    15. Verify img stork is visible
-    16. Verify name is enter name from no 13
-    17. Verify link text is visibe = 'Potwierdź datę urodzenia dziecka'
-    18. Verify date of brirth is like current_day.current_month.current_year
-    19. Verify gender is 'Dziewczynka'
-    20. Verify gender 'Nieznana' is not in page source 
-    21. Verify gift for childbirth  is 'NIE'
+    7. Verify color of "Chłopiec" == red
+    8. Click on "Chłopiec"
+    9. Verify alert 'Pole jest wymagane' is visible 
+    10. Verify select day is clickable and set day = future day  [from (curent date + 270 day)]
+    11. Verify select month is clickable and set month = future month [from (curent date + 270 day)]
+    12. Verify select year is clickable and set year =  future year [from (curent date + 270 day)]
+    13. Type random name from csv file 
+    14. Verify section of registration gift is visible
+    15. Select checkbox in registration gift section
+    16. Verify name from no 13 is visible in triangle
+    17. Load random town name, post code, street name, street number and phon nmber from csv files
+    18. Enter data from no 16
+    19. Click on "Dodaj dziecko"
+    20. Verify current url is '/profil-uzytkownika/lista-dzieci'
+    21. Verify alert icon and text is visible
+    22. Verify img stork is visible
+    23. Verify "Imię nieznane" is not in page source
+    24. Verify name is the entered name from no 13
+    25. Verify name from no 13 is visible in triangle
+    26. Verify text 'Potwierdź datę urodzenia dziecka' is not in page source
+    27. Verify date of brirth is like no10.no11.no12
+    28. Verify gender is 'Chłopiec'
+    29. Verify gender 'Nieznana' is not in page source 
+    30. Verify gift for childbirth  is 'TAK'
 
 Expected results:
     All test steps passed as excepted
