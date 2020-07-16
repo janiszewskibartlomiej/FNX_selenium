@@ -64,6 +64,8 @@ FireFox driver [geckodriver.exe] importand info:
 | | | [TS03_TC001](#TS03_TC001) | Successful adding baby | Using pregnancy and no gender radio |
 | | | [TS03_TC002](#TS03_TC002) | Successful adding baby | Using pregnancy and female radio |
 | | | [TS03_TC003](#TS03_TC003) | Successful adding baby | Using pregnancy and male radio |
+| | | [TS03_TC004](#TS03_TC004) | Successful adding baby | Using baby born and male radio |
+| | | [TS03_TC005](#TS03_TC005) | Successful adding baby | Using baby born and female radio |
 ***
     
 
