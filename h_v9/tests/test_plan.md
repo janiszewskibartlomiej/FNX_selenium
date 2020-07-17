@@ -424,9 +424,9 @@ Steps:
     7. Verify color of "Chłopiec" == red
     8. Click on "Chłopiec"
     9. Verify alert 'Pole jest wymagane' is visible 
-    10. Verify select day is clickable and set day = past day  [from (curent date - 1095 day)]
+    10. Verify select day is clickable and set day = past day  [from (curent date -1095 day)]
     11. Verify select month is clickable and set month = past month [from (curent date -1095 day)]
-    12. Verify select year is clickable and set year =  past year [from (curent date - 1095 day)]
+    12. Verify select year is clickable and set year =  past year [from (curent date -1095 day)]
     13. Type random name from csv file 
     14. Click on "Dodaj dziecko"
     15. Verify current url is '/profil-uzytkownika/lista-dzieci'
@@ -443,3 +443,47 @@ Steps:
 Expected results:
     All test steps passed as excepted
 ```
+
+test_TS03_TC005_successful_adding_baby_born_with_female <a name="TS03_TC005"></a>
+```yaml
+Preconditions:
+     Registered, active user in the system and login
+ 
+Steps:
+    1. Go to add baby page
+    2. Verify current url is '/profil-uzytkownika/dodaj-dziecko'
+    3. Click on "Dodaj dziecko"
+    4. Verify alert is visible and color == red
+    5. Click on "Mam już dziecko"
+    6. Click on "Dodaj dziecko"
+    7. Verify color of "Dziewczynka" == red
+    8. Click on "Dziewczynka"
+    9. Verify alert 'Pole jest wymagane' is visible and is in page source 
+    10. Verify select day is clickable and set day = past day  [from (curent date -47 day)]
+    11. Verify select month is clickable and set month = past month [from (curent date -47 day)]
+    12. Verify select year is clickable and set year =  past year [from (curent date -47 day)]
+    13. Verify section of registration gift is not visible
+    14. Verify select day is clickable and set day = past day  [from (curent date -46 day)]
+    15. Verify select month is clickable and set month = past month [from (curent date -46 day)]
+    16. Verify select year is clickable and set year =  past year [from (curent date -46 day)]
+    17. Verify section of registration gift is visible
+    18. Select checkbox in registration gift section
+    19. Enter random name from csv file
+    20. Load random town name, post code, street name, street number and phon number from csv files and enter data
+    21. Verify name from no 19 is visible in triangle
+    22. Click on "Dodaj dziecko"
+    23. Verify current url is '/profil-uzytkownika/lista-dzieci'
+    24. Verify alert icon and text is visible
+    25. Verify img stork is not visible and not in page source
+    26. Verify "Imię nieznane" is not in page source
+    27. Verify name is visible and the same like entered in no 19
+    28. Verify name from no 16 is visible in triangle
+    29. Verify date of brirth is like no14.no15.no16
+    30. Verify gender is 'Dziewczyna'
+    31. Verify gender 'Nieznana' is not in page source 
+    32. Verify gift for childbirth  is 'TAK'
+
+Expected results:
+    All test steps passed as excepted
+```
+
