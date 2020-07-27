@@ -1,16 +1,13 @@
 import sys
 import unittest
-from datetime import date
-import HtmlTestRunner
-
 import tests.suite_all_tests_chrome as suiteAllTestsChrome
 import tests.suite_all_tests_firefox as suiteAllTestsFireFox
 import tests.suite_all_tests_ie as suiteAllTests_IE
-from resources.test_data import Staging
+from resources.automation_methods import AutomationMethods
 
 if __name__ == '__main__':
-    current_date = date.today()
-    current_date_template = str(current_date).replace('-', '')
+    automation_of_tests = AutomationMethods()
+    automation_of_tests.removing_directories_in_reports_by_number_of_day(n_day=7)
 
     suite = unittest.TestSuite()
     suite_chrome = suiteAllTestsChrome.suite()
@@ -20,16 +17,5 @@ if __name__ == '__main__':
     suite.addTests(suite_firefox)
     suite.addTests(suite_ie)
 
-    domain = Staging.DOMAIN
-
-    report_title = f'Test Results of {domain} in Chrome & FF & IE'
-
-    domain_strip = domain[:14]
-    if domain_strip[-1] == '-':
-        domain_strip = domain_strip[:13]
-    report_name = domain_strip + "-AllBrowsers"
-
-    runner = HtmlTestRunner.HTMLTestRunner(output='reports/' + current_date_template, combine_reports=True,
-                                           report_title=report_title, report_name=report_name, verbosity=2,
-                                           failfast=False, descriptions=True, buffer=False)
+    runner = automation_of_tests.html_test_runner_report()
     runner.run(suite)

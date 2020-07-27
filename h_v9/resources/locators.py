@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 class LoginPageLocators:
     ICON_ACCOUNT = (By.XPATH, "//span[contains(@class,'kkicon kkicon-account')]")
     MY_CHILDREN_LINK_TEXT = (By.XPATH, "//a[contains(text(),'Moje')]")
-    DROP_DOWN_SECTION = (By.ID, "header-account")
+    DROP_DOWN_SECTION = (By.XPATH, "//div[@id='header-account']")
     USERNAME_FIELD = (By.XPATH, "//input[@placeholder='Login']")
     PASSWORD_FIELD = (By.XPATH, "//input[@placeholder='Hasło']")
     SUBMIT_BTN = (By.NAME, 'login')
@@ -18,7 +18,7 @@ class LoginPageLocators:
 
 
 class HomePageLocators:
-    ICON_ACCOUNT = (By.XPATH, "//span[contains(@class,'kkicon kkicon-account')]")
+    ICON_ACCOUNT = (By.XPATH, "//a[@class='skip-link skip-account']")
     LOGIN_BUTTON = (By.XPATH, "//a[@class='btn btn--brand']")
 
 
@@ -36,7 +36,7 @@ class AddBabyLocators:
     BORN_YEAR = (By.XPATH, "//select[@name='birthdate_[year]']")
     FIRST_NAME_INPUT = (By.XPATH, "//input[@data-placeholder-born='Imię']")
     ADD_BABY_BUTTON = (By.NAME, "submit")
-    ALERT_MESSAGE = (By.XPATH, "//p[contains(text(),'Pole jest wymagane')]")
+    ALERT_MESSAGE = (By.XPATH, "//li[@class='parsley-required']/p")
     CHECKBOX_GIFT_TEXT = (By.XPATH, "//div[@class='triangle-create']//p[1]")
     SECTION_OF_REGISTRATION_GIFT = (By.XPATH, "//div[@class='form-group registrationGiftsWrapper']")
     TOWN_NAME = (By.ID, "autocomplete-city")
@@ -53,7 +53,7 @@ class ListOfChildrenLocators:
     CONFIRM_DATE_OF_BIRTH_LINK = (By.LINK_TEXT, "Potwierdź datę urodzenia dziecka")
     DATE_OF_BIRTH_REGULAR = (By.XPATH, "//span[@class='font-weight-regular']")
     DATE_OF_BIRTH_BOLD = (By.XPATH, "//span[@class='font-weight-bold']")
-    GENDER_SECTION = (By.XPATH, "//div[@class='mb-3']/div[contains(text(),'Płeć')]")
+    GENDER_SECTION = (By.XPATH, "//div[@class='mb-3']/div[contains(text(),'Płeć:')]")
     GIFT_FOR_CHILDBIRTH_INFO = (By.XPATH, "//div[@class='mb-3']/div[contains(text(),'Paczka Narodzin')]")
     NAME_IN_TRIANGLE = (By.XPATH, "//span[@class='triangle-childname']")
     ALERT_ICON = (By.XPATH, "//span[@class='alert-icon']")

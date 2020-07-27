@@ -1,12 +1,11 @@
-import inspect
+import sys
 import unittest
 
-import pytest
 from selenium import webdriver
 
-from resources.test_data import CommonData
-from resources.page_object.login_page import LoginPage
+from resources.automation_methods import AutomationMethods
 from resources.locators import HomePageLocators, LoginPageLocators
+from resources.page_object.login_page import LoginPage
 
 
 class LoginFailureTestCaseBase(unittest.TestCase):
@@ -15,26 +14,36 @@ class LoginFailureTestCaseBase(unittest.TestCase):
 
     """
 
-
     def setUp(self):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--ignore-certificate-errors')
         chrome_options.add_argument('--headless')
-        self.driver = webdriver.Chrome(CommonData.CHROME_PATH, options=chrome_options)
+        chrome_path = AutomationMethods().get_path_from_name(file_name="chromedriver.exe")
+        self.driver = webdriver.Chrome(executable_path=chrome_path, options=chrome_options)
         self.driver.maximize_window()
 
-    def tearDown(self) -> None:
+    def tearDown(self):
         self.driver.quit()
 
 
 class LoginFailureTestCase(LoginFailureTestCaseBase):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.login_btn_text = "Zaloguj"
+        self.login_path = '/klub/zaloguj-sie'
+        self.logout_btn_text = "Wyloguj"
+        common_data = AutomationMethods().get_section_from_config(section_name="CommonData")
+        self.correct_email = common_data["user_email"]
+        self.correct_password = common_data["password"]
+        self.incorrect_email_1 = common_data["incorrect_email_1"]
+        self.incorrect_email_2 = common_data["incorrect_email_2"]
+        self.incorrect_password_1 = common_data["incorrect_password_1"]
+        self.incorrect_password_2 = common_data["incorrect_password_2"]
 
     def setUp(self):
         super().setUp()
         self.login_page = LoginPage(self.driver)
-        self.correct_email = CommonData.USER_EMAIL
-        self.correct_password = CommonData.PASSWORD
 
     # @pytest.fixture(scope='session', autouse=True)
     # def browser(self):
@@ -43,39 +52,35 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
 
     def test_TS01_TC004_failed_login_correct_email_and_incorrect_password(self):
         try:
-            self.login_page.assert_path_in_current_url(path='/klub/zaloguj-sie')
-            password = CommonData.INCORRECT_PASSWORD_1
-            self.login_page.assert_path_in_current_url(path='/klub/zaloguj-sie')
-            self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
-            self.login_page.login_as(username=self.correct_email, password=password, submit=True)
-            self.login_page.assert_path_in_current_url(path='/klub/zaloguj-sie')
+            self.login_page.assert_path_in_current_url(path=self.login_path)
+            self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, self.login_btn_text)
+            self.login_page.login_as(username=self.correct_email, password=self.incorrect_password_1, submit=True)
+            self.login_page.assert_path_in_current_url(path=self.login_path)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             assert self.login_page.element_is_visible(HomePageLocators.LOGIN_BUTTON) is True
-            self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
-            password = CommonData.INCORRECT_PASSWORD_2
-            self.login_page.login_as(username=self.correct_email, password=password, submit=False)
+            self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, self.login_btn_text)
+            self.login_page.login_as(username=self.correct_email, password=self.incorrect_password_2, submit=False)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
-            self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
+            self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, self.login_btn_text)
 
         except:
-            self.login_page.do_screenshot(
-                name=inspect.stack()[0][-3][:29] + inspect.stack()[0][1][-9:-3] + '_')
+            self.login_page.do_screenshot(name=sys._getframe(0).f_code.co_name + __file__[-10:-3] + "_")
             raise
 
     def test_TS01_TC005_failed_login_incorrect_email_and_correct_password(self):
         try:
-            self.login_page.assert_path_in_current_url(path='/klub/zaloguj-sie')
-            self.login_page.login_as(username=CommonData.INCORRECT_EMAIL_1, password=self.correct_password, submit=True)
+            self.login_page.assert_path_in_current_url(path=self.login_path)
+            self.login_page.login_as(username=self.incorrect_email_1,
+                                     password=self.correct_password, submit=True)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
-            assert self.login_page.get_element(HomePageLocators.LOGIN_BUTTON).text != "Wyloguj"
-            self.login_page.login_as(username=CommonData.INCORRECT_EMAIL_2, password=self.correct_password,
-                                     submit=False)
+            assert self.login_page.get_element(HomePageLocators.LOGIN_BUTTON).text != self.logout_btn_text
+            self.login_page.login_as(username=self.incorrect_email_2,
+                                     password=self.correct_password, submit=False)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
-            self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
+            self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, self.login_btn_text)
 
         except:
-            self.login_page.do_screenshot(
-                name=inspect.stack()[0][-3][:29] + inspect.stack()[0][1][-9:-3] + '_')
+            self.login_page.do_screenshot(name=sys._getframe(0).f_code.co_name + __file__[-10:-3] + "_")
             raise
 
     def test_TS01_TC006_failed_login_correct_email_and_password_with_space_key(self):
@@ -83,34 +88,31 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
             self.login_page.login_as(username=' ' + self.correct_email, password=' ' + self.correct_password,
                                      submit=False)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
-            self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, "Zaloguj")
+            self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, self.login_btn_text)
 
         except:
-            self.login_page.do_screenshot(
-                name=inspect.stack()[0][-3][:29] + inspect.stack()[0][1][-9:-3] + '_')
+            self.login_page.do_screenshot(name=sys._getframe(0).f_code.co_name + __file__[-10:-3] + "_")
             raise
 
     def test_TS01_TC007_failed_login_email_and_password_are_left_blank(self):
         try:
             self.login_page.click_on(LoginPageLocators.USERNAME_FIELD)
             self.login_page.enter_text_and_click_enter(LoginPageLocators.PASSWORD_FIELD, "")
-            self.login_page.assert_path_in_current_url("/klub/zaloguj-sie")
-            self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
+            self.login_page.assert_path_in_current_url(self.login_path)
+            self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, self.login_btn_text)
 
         except:
-            self.login_page.do_screenshot(
-                name=inspect.stack()[0][-3][:29] + inspect.stack()[0][1][-9:-3] + '_')
+            self.login_page.do_screenshot(name=sys._getframe(0).f_code.co_name + __file__[-10:-3] + "_")
             raise
 
     def test_TS01_TC008_failed_login_reverse_data_input(self):
         try:
             self.login_page.login_as(username=self.correct_password, password=self.correct_email, submit=False)
-            assert "Zaloguj" in self.login_page.driver.page_source
-            self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, "Zaloguj")
+            assert self.login_btn_text in self.login_page.driver.page_source
+            self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, self.login_btn_text)
 
         except:
-            self.login_page.do_screenshot(
-                name=inspect.stack()[0][-3][:29] + inspect.stack()[0][1][-9:-3] + '_')
+            self.login_page.do_screenshot(name=sys._getframe(0).f_code.co_name + __file__[-10:-3] + "_")
             raise
 
 
