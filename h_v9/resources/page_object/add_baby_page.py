@@ -14,7 +14,6 @@ class AddBabyPage(BasePage):
         super().__init__(driver)
         common_data = AutomationMethods().get_section_from_config(section_name="CommonData")
         LoginPage(self.driver).login_as(username=common_data["user_email"], password=common_data["password"])
-        time.sleep(1)
         url = f'{self.base_url}/profil-uzytkownika/dodaj-dziecko'
         self.driver.get(url)
 
@@ -30,14 +29,11 @@ class AddBabyPage(BasePage):
 
         month_select = Select(self.get_element(by_locator=month_locator))
         list_of_month = [i.text for i in month_select.options]
-        time.sleep(2)
         index = int(month) - 1
         month_select.select_by_visible_text(list_of_month[index])
 
         day_select = Select(self.get_element(by_locator=day_locator))
-        time.sleep(2)
         day_select.select_by_visible_text(str(day))
 
         year_select = Select(self.get_element(by_locator=year_locator))
-        time.sleep(2)
         year_select.select_by_visible_text(str(year))

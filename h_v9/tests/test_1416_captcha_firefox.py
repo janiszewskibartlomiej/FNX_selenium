@@ -1,5 +1,4 @@
 import sys
-import time
 import unittest
 
 from selenium import webdriver
@@ -24,6 +23,7 @@ class CaptchaTestCaseBase(unittest.TestCase):
         firefox_path = AutomationMethods().get_path_from_name(file_name="geckodriver.exe")
         self.driver = webdriver.Firefox(executable_path=firefox_path, firefox_profile=profile,
                                         options=firefox_options)
+        self.driver.set_page_load_timeout(30)
         # self.driver = webdriver.Remote(command_executor='http://192.168.8.103:5000/wd/hub', desired_capabilities= firefox_options.to_capabilities())
         self.driver.maximize_window()
 
@@ -97,16 +97,13 @@ class CaptchaTestCase(CaptchaTestCaseBase):
     def test_TS02_TC003_captcha_is_visible_after_three_times_incorrect_login_total_quantity(self):
         try:
             self.login_page.login_as(username=self.email_3, password=self.password_3)
-            time.sleep(1)
             self.login_page.login_as(username=self.email_2, password=self.password_3)
             self.login_page.assert_element_text(by_locator=LoginPageLocators.SUBMIT_BTN, element_text=self.login_text)
             self.login_page.login_as(username=self.correct_email, password=self.correct_password)
             self.login_page.click_on(by_loctor=HomePageLocators.ICON_ACCOUNT)
-            time.sleep(1)
             self.login_page.assert_element_text(by_locator=LoginPageLocators.MY_PROFILE,
                                                 element_text=self.my_profile_text)
             self.login_page.click_on(by_loctor=LoginPageLocators.LOGOUT_BUTTON)
-            time.sleep(3)
             self.login_page.login_as(username=self.email_2, password=self.password_1)
             self.login_page.click_on(by_loctor=LoginPageLocators.CAPTCHA_SECTION)
 

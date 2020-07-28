@@ -1,5 +1,4 @@
 import sys
-import time
 import unittest
 
 from selenium import webdriver
@@ -21,6 +20,7 @@ class LoginFailureTestCaseBase(unittest.TestCase):
         caps['ignoreProtectedModeSettings'] = True
         ie_path = AutomationMethods().get_path_from_name(file_name="IEDriverServer.exe")
         self.driver = webdriver.Ie(executable_path=ie_path, capabilities=caps)
+        self.driver.set_page_load_timeout(30)
         self.driver.maximize_window()
 
     def tearDown(self) -> None:
@@ -44,7 +44,6 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
 
     def setUp(self):
         super().setUp()
-        time.sleep(3)
         self.login_page = LoginPage(self.driver)
 
     def test_TS01_TC004_failed_login_correct_email_and_incorrect_password(self):
@@ -52,13 +51,11 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
             self.login_page.assert_path_in_current_url(path=self.login_path)
             self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, self.login_btn_text)
             self.login_page.login_as(username=self.correct_email, password=self.incorrect_password_1, submit=True)
-            time.sleep(3)
             self.login_page.assert_path_in_current_url(path=self.login_path)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             assert self.login_page.element_is_visible(HomePageLocators.LOGIN_BUTTON) is True
             self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, self.login_btn_text)
             self.login_page.login_as(username=self.correct_email, password=self.incorrect_password_2, submit=False)
-            time.sleep(3)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, self.login_btn_text)
 
@@ -71,12 +68,10 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
             self.login_page.assert_path_in_current_url(path=self.login_path)
             self.login_page.login_as(username=self.incorrect_email_1,
                                      password=self.correct_password, submit=True)
-            time.sleep(3)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             assert self.login_page.get_element(HomePageLocators.LOGIN_BUTTON).text != self.logout_btn_text
             self.login_page.login_as(username=self.incorrect_email_2,
                                      password=self.correct_password, submit=False)
-            time.sleep(3)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, self.login_btn_text)
 
@@ -88,9 +83,7 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
         try:
             self.login_page.login_as(username=' ' + self.correct_email, password=' ' + self.correct_password,
                                      submit=False)
-            time.sleep(3)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
-            time.sleep(5)
             self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, self.login_btn_text)
 
         except:

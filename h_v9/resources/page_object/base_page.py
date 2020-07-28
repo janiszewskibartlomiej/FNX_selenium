@@ -38,8 +38,8 @@ class BasePage:
         assert color_element.hex == color_hex
 
     def assert_path_in_current_url(self, path: str) -> None:
-        current_url = self.driver.current_url
-        assert path in current_url
+        assert_path_in_url = WebDriverWait(self.driver, 50).until(EC.url_contains(url=path))
+        assert assert_path_in_url is True
 
     def enter_text(self, by_locator: tuple, text: str) -> WebDriverWait:
         element = WebDriverWait(self.driver, 50).until(EC.visibility_of_element_located(by_locator))

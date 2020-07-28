@@ -125,17 +125,14 @@ class AutomationMethods:
     def get_screenshot_documentation_from_links(self, set_of_links: set, domain: str, driver: webdriver,
                                                 dictionary_path: str) -> dict:
         driver = driver
+        driver.set_page_load_timeout(30)
         incorrect_status_code = {}
         for link in set_of_links:
             response = requests.get(link)
-            time.sleep(1)
             status = str(response.status_code)
             print("Link: ", link, "\t\t\t\t\tStatus code: ", status)
             driver.get(link)
-            time.sleep(2)
-            driver.set_page_load_timeout(8)
             name = link.replace(str(domain), "").replace("/", "_")
-            time.sleep(1)
             self.get_screenshot(name=name, driver=driver, dictionary_path=dictionary_path)
             if status[0] in ["4", "3", "5"]:
                 incorrect_status_code[link] = status

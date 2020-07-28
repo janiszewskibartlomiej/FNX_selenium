@@ -1,5 +1,4 @@
 import sys
-import time
 import unittest
 
 from selenium import webdriver
@@ -18,6 +17,7 @@ class CaptchaTestCaseBase(unittest.TestCase):
         chrome_options.add_argument('--headless')
         chrome_path = AutomationMethods().get_path_from_name(file_name="chromedriver.exe")
         self.driver = webdriver.Chrome(executable_path=chrome_path, options=chrome_options)
+        self.driver.set_page_load_timeout(30)
         # self.driver = webdriver.Remote(command_executor='http://192.168.8.103:5000/wd/hub', desired_capabilities= chrome_options.to_capabilities())
         self.driver.maximize_window()
 
@@ -92,16 +92,13 @@ class CaptchaTestCase(CaptchaTestCaseBase):
         try:
 
             self.login_page.login_as(username=self.email_3, password=self.password_3)
-            time.sleep(1)
             self.login_page.login_as(username=self.email_2, password=self.password_3)
             self.login_page.assert_element_text(by_locator=LoginPageLocators.SUBMIT_BTN, element_text=self.login_text)
             self.login_page.login_as(username=self.correct_email, password=self.correct_password)
             self.login_page.click_on(by_loctor=HomePageLocators.ICON_ACCOUNT)
-            time.sleep(1)
             self.login_page.assert_element_text(by_locator=LoginPageLocators.MY_PROFILE,
                                                 element_text=self.my_profile_text)
             self.login_page.click_on(by_loctor=LoginPageLocators.LOGOUT_BUTTON)
-            time.sleep(1)
             self.login_page.login_as(username=self.email_2, password=self.password_1)
             self.login_page.click_on(by_loctor=LoginPageLocators.CAPTCHA_SECTION)
 

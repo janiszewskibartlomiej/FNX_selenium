@@ -1,5 +1,4 @@
 import sys
-import time
 import unittest
 
 from selenium import webdriver
@@ -29,6 +28,7 @@ class LoginSuccessTestCaseBase(unittest.TestCase):
         firefox_path = AutomationMethods().get_path_from_name(file_name="geckodriver.exe")
         self.driver = webdriver.Firefox(executable_path=firefox_path, firefox_profile=profile,
                                         options=firefox_options)
+        self.driver.set_page_load_timeout(30)
         # self.driver = webdriver.Remote(command_executor='http://192.168.8.103:5000/wd/hub', desired_capabilities= firefox_options.to_capabilities())
         self.driver.maximize_window()
 
@@ -70,7 +70,6 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
             assert self.login_page.element_is_visible(LoginPageLocators.LOGOUT_BUTTON) is True
             self.login_page.assert_element_text(LoginPageLocators.LOGOUT_BUTTON, self.logout_text)
             self.login_page.click_on(LoginPageLocators.LOGOUT_BUTTON)
-            time.sleep(3)
             assert self.login_page.element_is_visible(LoginPageLocators.SUBMIT_BTN) is True
             self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, self.login_text)
         except:
@@ -85,7 +84,6 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
             password_input = self.login_page.get_element(by_locator=LoginPageLocators.PASSWORD_FIELD)
             self.assertEqual(password_input.tag_name, self.input_tag)
             self.login_page.login_as(username=self.email, password=self.password, submit=False)
-            time.sleep(3)
             self.login_page.assert_path_in_current_url(path=self.after_login_url)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             self.login_page.assert_element_text(LoginPageLocators.LOGOUT_BUTTON, self.logout_text)
@@ -100,11 +98,8 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
     def test_TS01_TC003_successful_login_with_email_capitalizer(self):
         try:
             self.login_page.login_as(username=self.email.capitalize(), password=self.password, submit=False)
-            time.sleep(2)
             self.login_page.is_clickable(by_locator=HomePageLocators.ICON_ACCOUNT)
-            time.sleep(3)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
-            time.sleep(3)
             drop_down = self.login_page.get_element(by_locator=LoginPageLocators.DROP_DOWN_SECTION)
             assert self.text_in_dropdown in drop_down.get_attribute("innerHTML")
             assert self.text_in_dropdown in self.login_page.driver.page_source
@@ -120,7 +115,6 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
             self.login_page.enter_text(by_locator=LoginPageLocators.FACEBOOK_PASSWORD,
                                        text=self.facebook_password)
             self.login_page.click_on(by_loctor=LoginPageLocators.FACEBOOK_LOGIN_BTN)
-            time.sleep(3)
             self.login_page.click_on(by_loctor=LoginPageLocators.ICON_ACCOUNT)
             assert self.my_children_link_text in self.login_page.driver.page_source
             self.login_page.assert_element_text(by_locator=LoginPageLocators.MY_CHILDREN_LINK_TEXT,

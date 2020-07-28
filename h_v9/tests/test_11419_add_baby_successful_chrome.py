@@ -1,5 +1,4 @@
 import sys
-import time
 import unittest
 
 from selenium import webdriver
@@ -22,6 +21,7 @@ class AddBabySuccessTestCaseBase(unittest.TestCase):
         chrome_options.add_argument('--headless')
         chrome_path = AutomationMethods().get_path_from_name(file_name="chromedriver.exe")
         self.driver = webdriver.Chrome(executable_path=chrome_path, options=chrome_options)
+        self.driver.set_page_load_timeout(30)
         self.driver.maximize_window()
 
     def tearDown(self) -> None:
@@ -59,16 +59,13 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
             self.add_baby_page.assert_path_in_current_url(path=self.add_baby_url)
 
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
-            time.sleep(3)
 
             self.add_baby_page.assert_element_color_hex(by_locator=AddBabyLocators.I_AM_PREGNANT,
                                                         color_hex=self.alert_color)
 
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.I_AM_PREGNANT)
-            time.sleep(3)
 
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
-            time.sleep(3)
 
             self.add_baby_page.assert_element_color_hex(by_locator=AddBabyLocators.NO_GENDER_RADIO,
                                                         color_hex=self.alert_color)
@@ -93,7 +90,6 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
             assert self.accept_text in self.add_baby_page.driver.page_source
 
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
-            time.sleep(3)
 
             self.add_baby_page.assert_path_in_current_url(path=self.children_list_url)
 
@@ -139,16 +135,13 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
             self.add_baby_page.assert_path_in_current_url(path=self.add_baby_url)
 
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
-            time.sleep(3)
 
             self.add_baby_page.assert_element_color_hex(by_locator=AddBabyLocators.I_AM_PREGNANT,
                                                         color_hex=self.alert_color)
 
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.I_AM_PREGNANT)
-            time.sleep(3)
 
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
-            time.sleep(3)
 
             self.add_baby_page.assert_element_color_hex(by_locator=AddBabyLocators.FEMALE, color_hex=self.alert_color)
 
@@ -174,7 +167,6 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
             path = self.automation_methods.get_path_from_name(file_name="imiona_polskie.csv")
             name = self.add_baby_page.get_random_firstname_from_csv(path=path)
             self.add_baby_page.enter_text_and_click_enter(by_locators=AddBabyLocators.FIRST_NAME_INPUT, text=name)
-            time.sleep(3)
 
             self.add_baby_page.assert_path_in_current_url(path=self.children_list_url)
 
@@ -227,16 +219,13 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
             self.add_baby_page.assert_path_in_current_url(path=self.add_baby_url)
 
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
-            time.sleep(3)
 
             self.add_baby_page.assert_element_color_hex(by_locator=AddBabyLocators.I_AM_PREGNANT,
                                                         color_hex=self.alert_color)
 
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.I_AM_PREGNANT)
-            time.sleep(3)
 
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
-            time.sleep(3)
 
             self.add_baby_page.assert_element_color_hex(by_locator=AddBabyLocators.MALE, color_hex=self.alert_color)
 
@@ -266,7 +255,6 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
             assert self.accept_text in gift_section.get_attribute('innerText')
             assert self.my_baby_club_url in gift_section.get_attribute('innerHTML')
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.CHECKBOX_GIFT_TEXT)
-            time.sleep(3)
 
             self.add_baby_page.assert_element_text(by_locator=AddBabyLocators.NAME_IN_TRIANGLE, element_text=name)
 
@@ -287,7 +275,6 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
             self.add_baby_page.enter_text(by_locator=AddBabyLocators.PHONE_NUMBER, text=phone_nunber)
 
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
-            time.sleep(3)
 
             self.add_baby_page.assert_path_in_current_url(path=self.children_list_url)
 
@@ -338,16 +325,13 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
             self.add_baby_page.assert_path_in_current_url(path=self.add_baby_url)
 
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
-            time.sleep(3)
 
             self.add_baby_page.assert_element_color_hex(by_locator=AddBabyLocators.I_HAVE_BABY,
                                                         color_hex=self.alert_color)
 
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.I_HAVE_BABY)
-            time.sleep(3)
 
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
-            time.sleep(3)
 
             self.add_baby_page.assert_element_color_hex(by_locator=AddBabyLocators.MALE, color_hex=self.alert_color)
 
@@ -375,7 +359,6 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
                 by_locator=AddBabyLocators.SECTION_OF_REGISTRATION_GIFT) is True
 
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
-            time.sleep(3)
 
             self.add_baby_page.assert_path_in_current_url(path=self.children_list_url)
 
@@ -426,7 +409,6 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
             self.add_baby_page.assert_path_in_current_url(path=self.add_baby_url)
 
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
-            time.sleep(3)
 
             assert self.add_baby_page.element_is_visible(AddBabyLocators.ALERT_MESSAGE) is True
 
@@ -434,10 +416,8 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
                                                         color_hex=self.alert_color)
 
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.I_HAVE_BABY)
-            time.sleep(3)
 
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
-            time.sleep(3)
 
             assert self.add_baby_page.element_is_visible(AddBabyLocators.ALERT_MESSAGE) is True
 
@@ -477,7 +457,6 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
             assert self.accept_text in gift_section.get_attribute('innerText')
             assert self.my_baby_club_url in gift_section.get_attribute('innerHTML')
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.CHECKBOX_GIFT_TEXT)
-            time.sleep(3)
 
             name_path = self.automation_methods.get_path_from_name(file_name="imiona_polskie.csv")
             name = self.add_baby_page.get_random_firstname_from_csv(path=name_path)
@@ -502,7 +481,6 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
             self.add_baby_page.assert_element_text(by_locator=AddBabyLocators.NAME_IN_TRIANGLE, element_text=name)
 
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
-            time.sleep(3)
 
             self.add_baby_page.assert_path_in_current_url(path=self.children_list_url)
 

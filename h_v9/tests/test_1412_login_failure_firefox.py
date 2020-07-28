@@ -26,6 +26,7 @@ class LoginFailureTestCaseBase(unittest.TestCase):
         firefox_path = AutomationMethods().get_path_from_name(file_name="geckodriver.exe")
         self.driver = webdriver.Firefox(executable_path=firefox_path, firefox_profile=profile,
                                         options=firefox_options)
+        self.driver.set_page_load_timeout(30)
         # self.driver = webdriver.Remote(command_executor='http://192.168.8.103:5000/wd/hub', desired_capabilities= firefox_options.to_capabilities())
         self.driver.maximize_window()
 
