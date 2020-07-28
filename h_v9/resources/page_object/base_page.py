@@ -3,6 +3,7 @@ import random
 import time
 from datetime import date, datetime, timedelta
 
+from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -23,9 +24,9 @@ class BasePage:
         self.driver = driver
         self.base_url = AutomationMethods().get_section_from_config(section_name="Staging")["access"]
 
-    def click_on(self, by_loctor: tuple) -> None:
-        web_element = WebDriverWait(self.driver, 50).until(EC.visibility_of_element_located(by_loctor))
-        ActionChains(self.driver).click(web_element).perform()
+    def click_on(self, by_loctor: tuple):
+        web_element = WebDriverWait(self.driver, 50).until(EC.element_to_be_clickable(by_loctor))
+        return web_element.click()
 
     def assert_element_text(self, by_locator: tuple, element_text: str) -> None:
         web_element = WebDriverWait(self.driver, 50).until(EC.visibility_of_element_located(by_locator))
@@ -62,54 +63,54 @@ class BasePage:
         element = WebDriverWait(self.driver, 50).until(EC.invisibility_of_element_located(by_locator))
         return bool(element)
 
-    def get_element(self, by_locator: tuple) -> WebDriverWait:
+    def get_element(self, by_locator: tuple):
         return WebDriverWait(self.driver, 50).until(EC.visibility_of_element_located(by_locator))
 
-    def hover_to(self, by_locator : tuple) -> None:
-        element = WebDriverWait(self.driver, 50).until(EC.visibility_of_element_located(by_locator))
-        ActionChains(self.driver).move_to_element(element).perform()
+    def hover_to(self, by_locator : tuple) -> ActionChains:
+        element = WebDriverWait(self.driver, 50).until(EC.element_to_be_clickable(by_locator))
+        return ActionChains(self.driver).move_to_element(element).perform()
 
-    def choose(self, drop_down_select : WebDriverWait, name : str):
+    def choose(self, drop_down_select: WebDriverWait, name: str) -> WebDriverWait:
         drop_down = WebDriverWait(self, 50).until(EC.visibility_of_element_located(drop_down_select))
-        drop_down.find_element(By.NAME(name)).click()
+        return drop_down.find_element(By.NAME(name)).click()
 
     def quit(self) -> None:
         self.driver.close()
         self.driver.quit()
 
-    def visit(self, location : str) -> str:
+    def visit(self, location: str) -> str:
         url = self.base_url + location
         return self.driver.get(url)
 
-    def open_new_tab_and_switch(self):
+    def open_new_tab_and_switch(self) -> webdriver:
         tab = self.driver.execute_script("window.open('');")
         return self.driver.switch_to.window(tab[1])
 
-    def get_current_url(self):
+    def get_current_url(self) -> webdriver:
         return self.driver.current_url
 
-    def get_random_firstname_from_csv(self, path : str) -> str:
+    def get_random_firstname_from_csv(self, path: str) -> str:
         # ROOT_DIR = os.path.abspath(os.curdir)
         with open(file=str(path), encoding="utf8", mode="r") as file:
             first_name = file.read().splitlines()
             random_name = random.choice(first_name)
             return random_name
 
-    def get_random_town_name_from_csv(self, path : str) -> str:
+    def get_random_town_name_from_csv(self, path: str) -> str:
         with open(file=str(path), encoding="utf8", mode="r") as file:
             town_list = file.read().splitlines()
             random_town_data = random.choice(town_list)
             random_town_name = random_town_data.split(";")
             return random_town_name[1]
 
-    def get_random_street_name_from_csv(self, path : str) -> str:
+    def get_random_street_name_from_csv(self, path: str) -> str:
         with open(file=str(path), encoding="utf8", mode="r") as file:
             street_list = file.read().splitlines()
             random_street_data = random.choice(street_list)
             random_street_name = random_street_data.split(";")
             return random_street_name[7]
 
-    def get_date_from_delta_n_day(self, add_days : int) -> dict:
+    def get_date_from_delta_n_day(self, add_days: int) -> dict:
         today = datetime.today()
         future_date = today + timedelta(days=add_days)
         date_slice = datetime.strftime(future_date, "%Y-%m-%d")
@@ -120,7 +121,7 @@ class BasePage:
         }
         return date_dict
 
-    def get_random_post_code_and_town_name_from_csv(self, path : str) -> dict:
+    def get_random_post_code_and_town_name_from_csv(self, path: str) -> dict:
         with open(file=str(path), encoding="utf8", mode="r") as file:
             data_list = file.read().splitlines()
             random_data = random.choice(data_list)
@@ -162,7 +163,7 @@ class BasePage:
             str_next_month = "0" + str_next_month
         return str_next_month
 
-    def do_screenshot(self, name : str) -> None:
+    def do_screenshot(self, name: str) -> None:
         original_size = self.driver.get_window_size()
         required_width = self.driver.execute_script('return document.body.parentNode.scrollWidth')
         required_height = self.driver.execute_script('return document.body.parentNode.scrollHeight')

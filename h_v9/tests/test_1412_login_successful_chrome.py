@@ -20,7 +20,7 @@ class LoginSuccessTestCaseBase(unittest.TestCase):
     def setUp(self) -> None:
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--ignore-certificate-errors')
-        # chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--headless')
         chrome_path = AutomationMethods().get_path_from_name(file_name="chromedriver.exe")
         self.driver = webdriver.Chrome(executable_path=chrome_path, options=chrome_options)
         self.driver.maximize_window()

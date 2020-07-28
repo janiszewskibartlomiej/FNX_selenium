@@ -343,7 +343,6 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
     def test_TS03_TC004_successful_adding_baby_born_with_male(self):
         try:
             self.add_baby_page.assert_path_in_current_url(path=self.add_baby_url)
-
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
             time.sleep(3)
 
