@@ -74,24 +74,23 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
     def test_TS01_TC005_failed_login_incorrect_email_and_correct_password(self):
         try:
             self.login_page.assert_path_in_current_url(path=self.login_path)
-            self.login_page.login_as(username=self.incorrect_email_1,
+            self.login_page.incorrect_login_as(username=self.incorrect_email_1,
                                      password=self.correct_password, submit=True)
-            self.login_page.incorrect_login_as(HomePageLocators.ICON_ACCOUNT)
+            self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             assert self.login_page.get_element(HomePageLocators.LOGIN_BUTTON).text != self.logout_btn_text
-            self.login_page.login_as(username=self.incorrect_email_2,
+            self.login_page.incorrect_login_as(username=self.incorrect_email_2,
                                      password=self.correct_password, submit=False)
-            self.login_page.incorrect_login_as(HomePageLocators.ICON_ACCOUNT)
+            self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, self.login_btn_text)
-
         except:
             self.login_page.do_screenshot(name=sys._getframe(0).f_code.co_name + __file__[-11:-3] + "_")
             raise
 
     def test_TS01_TC006_failed_login_correct_email_and_password_with_space_key(self):
         try:
-            self.login_page.login_as(username=' ' + self.correct_email, password=' ' + self.correct_password,
+            self.login_page.incorrect_login_as(username=' ' + self.correct_email, password=' ' + self.correct_password,
                                      submit=False)
-            self.login_page.incorrect_login_as(HomePageLocators.ICON_ACCOUNT)
+            self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, self.login_btn_text)
 
         except:

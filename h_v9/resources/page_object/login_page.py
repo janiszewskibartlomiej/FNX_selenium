@@ -1,5 +1,8 @@
-from selenium.webdriver.support.wait import WebDriverWait
+import time
+
 from selenium.webdriver.support.expected_conditions import staleness_of
+from selenium.webdriver.support.wait import WebDriverWait
+
 from .base_page import BasePage
 from ..locators import LoginPageLocators
 
@@ -22,9 +25,16 @@ class LoginPage(BasePage):
 
     def incorrect_login_as(self, username: str, password: str, submit=True):
 
+        old_page = self.driver.find_element_by_tag_name('html')
         self.enter_text(LoginPageLocators.USERNAME_FIELD, username)
         if submit == False:
             self.enter_text_and_click_enter(LoginPageLocators.PASSWORD_FIELD, password)
         else:
             self.enter_text(LoginPageLocators.PASSWORD_FIELD, password)
             self.click_on(LoginPageLocators.SUBMIT_BTN)
+        WebDriverWait(self.driver, 80).until(staleness_of(old_page))
+
+
+        # execute_js = self.driver.execute_script("return document.readyState")
+        # while execute_js != "complete":
+        #     execute_js = self.driver.execute_script("return document.readyState")

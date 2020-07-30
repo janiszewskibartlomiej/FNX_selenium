@@ -3,7 +3,6 @@ import random
 import time
 from datetime import date, datetime, timedelta
 
-from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -25,86 +24,93 @@ class BasePage:
         self.driver = driver
         self.base_url = AutomationMethods().get_section_from_config(section_name="Staging")["access"]
 
-    def click_on_and_wait_for_a_new_page(self, by_loctor: tuple) -> None:
+    def click_on_and_wait_for_a_new_page(self, by_loctor: tuple):
         old_page = self.driver.find_element_by_tag_name('html')
-        web_element = WebDriverWait(self.driver, 80).until(EC.element_to_be_clickable(by_loctor))
+        web_element = WebDriverWait(self.driver, 100).until(EC.element_to_be_clickable(by_loctor))
         web_element.click()
-        WebDriverWait(self.driver, 80).until(EC.staleness_of(old_page))
+        WebDriverWait(self.driver, 100).until(EC.staleness_of(old_page))
 
-    def click_on(self, by_loctor: tuple) -> None:
-        web_element = WebDriverWait(self.driver, 80).until(EC.element_to_be_clickable(by_loctor))
+    def click_on(self, by_loctor: tuple):
+        web_element = WebDriverWait(self.driver, 100).until(EC.element_to_be_clickable(by_loctor))
         web_element.click()
+        while not self.page_is_loading():
+            continue
 
-    def assert_element_text(self, by_locator: tuple, element_text: str) -> None:
-        web_element = WebDriverWait(self.driver, 80).until(EC.text_to_be_present_in_element(by_locator, element_text))
+    def assert_element_text(self, by_locator: tuple, element_text: str):
+        web_element = WebDriverWait(self.driver, 100).until(EC.text_to_be_present_in_element(by_locator, element_text))
         assert web_element is True
 
-    def assert_element_color_hex(self, by_locator: tuple, color_hex: str) -> None:
-        web_element = WebDriverWait(self.driver, 80).until(EC.visibility_of_element_located(by_locator))
-        attribute = WebDriverWait(self.driver, 80).until(web_element.value_of_css_property('color'))
-        print(attribute)
-        color_element = Color.from_string(attribute)
-        print(color_element)
+    def assert_element_color_hex(self, by_locator: tuple, color_hex: str):
+        web_element = WebDriverWait(self.driver, 100).until(EC.visibility_of_element_located(by_locator))
+        color_element = Color.from_string(web_element.value_of_css_property('color'))
         assert color_element.hex == color_hex
 
-    def assert_path_in_current_url(self, path: str) -> None:
-        assert_path_in_url = WebDriverWait(self.driver, 80).until(EC.url_contains(url=path))
+    def assert_path_in_current_url(self, path: str):
+        assert_path_in_url = WebDriverWait(self.driver, 100).until(EC.url_contains(url=path))
         assert assert_path_in_url is True
 
-    def enter_text(self, by_locator: tuple, text: str) -> WebDriverWait:
-        element = WebDriverWait(self.driver, 80).until(EC.visibility_of_element_located(by_locator))
+    def enter_text(self, by_locator: tuple, text: str):
+        element = WebDriverWait(self.driver, 100).until(EC.visibility_of_element_located(by_locator))
         element.clear()
-        return element.send_keys(text)
+        element.send_keys(text)
 
-    def enter_text_and_click_enter(self, by_locators: tuple, text: str) -> WebDriverWait:
-        element = WebDriverWait(self.driver, 80).until(EC.visibility_of_element_located(by_locators))
-        element.clear()
-        return element.send_keys(text + Keys.ENTER)
-
-    def enter_text_and_click_enter_and_wait_for_a_new_page(self, by_locators: tuple, text: str) -> None:
-        old_page = self.driver.find_element_by_tag_name('html')
-        element = WebDriverWait(self.driver, 80).until(EC.visibility_of_element_located(by_locators))
+    def enter_text_and_click_enter(self, by_locators: tuple, text: str):
+        element = WebDriverWait(self.driver, 100).until(EC.visibility_of_element_located(by_locators))
         element.clear()
         element.send_keys(text + Keys.ENTER)
-        WebDriverWait(self.driver, 80).until(staleness_of(old_page))
+
+    def enter_text_and_click_enter_and_wait_for_a_new_page(self, by_locators: tuple, text: str):
+        old_page = self.driver.find_element_by_tag_name('html')
+        element = WebDriverWait(self.driver, 100).until(EC.visibility_of_element_located(by_locators))
+        element.clear()
+        element.send_keys(text + Keys.ENTER)
+        WebDriverWait(self.driver, 100).until(staleness_of(old_page))
+
+    def page_is_loading(self):
+        while True:
+            page_status = self.driver.execute_script("return document.readyState")
+            if page_status == "complete":
+                return True
+            else:
+                yield False
 
     def is_clickable(self, by_locator: tuple) -> bool:
-        element = WebDriverWait(self.driver, 80).until(EC.element_to_be_clickable(by_locator))
+        element = WebDriverWait(self.driver, 100).until(EC.element_to_be_clickable(by_locator))
         return bool(element)
 
     def element_is_visible(self, by_locator: tuple) -> bool:
-        element = WebDriverWait(self.driver, 80).until(EC.visibility_of_element_located(by_locator))
+        element = WebDriverWait(self.driver, 100).until(EC.visibility_of_element_located(by_locator))
         return bool(element)
 
     def element_is_not_visible(self, by_locator: tuple) -> bool:
-        element = WebDriverWait(self.driver, 80).until(EC.invisibility_of_element_located(by_locator))
+        element = WebDriverWait(self.driver, 100).until(EC.invisibility_of_element_located(by_locator))
         return bool(element)
 
     def get_element(self, by_locator: tuple):
-        element = WebDriverWait(self.driver, 80).until(EC.visibility_of_element_located(by_locator))
+        element = WebDriverWait(self.driver, 100).until(EC.visibility_of_element_located(by_locator))
         return element
 
     def hover_to(self, by_locator: tuple) -> ActionChains:
-        element = WebDriverWait(self.driver, 80).until(EC.element_to_be_clickable(by_locator))
+        element = WebDriverWait(self.driver, 100).until(EC.element_to_be_clickable(by_locator))
         return ActionChains(self.driver).move_to_element(element).perform()
 
-    def choose(self, drop_down_select: WebDriverWait, name: str) -> WebDriverWait:
-        drop_down = WebDriverWait(self, 80).until(EC.visibility_of_element_located(drop_down_select))
-        return drop_down.find_element(By.NAME(name)).click()
+    def choose(self, drop_down_select: tuple, name: str):
+        drop_down = WebDriverWait(self, 100).until(EC.visibility_of_element_located(drop_down_select))
+        drop_down.find_element(By.NAME(name)).click()
 
-    def quit(self) -> None:
+    def quit(self):
         self.driver.close()
         self.driver.quit()
 
-    def visit(self, location: str) -> str:
+    def visit(self, location: str):
         url = self.base_url + location
         return self.driver.get(url)
 
-    def open_new_tab_and_switch(self) -> webdriver:
+    def open_new_tab_and_switch(self):
         tab = self.driver.execute_script("window.open('');")
         return self.driver.switch_to.window(tab[1])
 
-    def get_current_url(self) -> webdriver:
+    def get_current_url(self):
         return self.driver.current_url
 
     def get_random_firstname_from_csv(self, path: str) -> str:

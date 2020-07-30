@@ -2,10 +2,12 @@ import os
 import shutil
 import sys
 import time
+import smtplib, ssl
 from configparser import ConfigParser
 from datetime import date
+from email.mime.text import MIMEText
 from pathlib import Path
-
+from email.mime.multipart import MIMEMultipart
 import HtmlTestRunner
 import requests
 from selenium import webdriver
@@ -139,15 +141,40 @@ class AutomationMethods:
         return incorrect_status_code
 
     def send_report_by_email(self):
-        pass
+        POST = self.get_section_from_config(section_name="post")
+        smtp_server = POST["smtp_server"]
+        port = 25
+        sender = POST["sender_email"]
+        password = POST["password"]
+        receiver_email = POST["test"]
+        subject = POST["subject"]
+
+        message = MIMEMultipart()
+        message["From"] = sender
+        message["To"] = receiver_email
+        message["Subject"] = subject
+        message_conntent = """
+        Cześć,\n 
+        W załączeniu przesyłam raport z wynikami testów. \n
+        Pozdro Bart
+        """
+        body = MIMEText(message_conntent)
+        message.attach(body)
+        text = message.as_string()
+
+        context = ssl.create_default_context()
+        with smtplib.SMTP(host=smtp_server, port=port) as server:
+            server.login(user=sender, password=password)
+            server.sendmail(sender, receiver_email, text)
 
 
 if __name__ == '__main__':
     print(sys.path)
-    set_of_link = AutomationMethods().get_set_from_links_file(
-        file_name="links.csv")
-    driver = AutomationMethods().get_ie_driver()
-    AutomationMethods().get_screenshot_documentation_from_links(set_of_links=set_of_link,
-                                                                domain="",
-                                                                driver=driver,
-                                                                dictionary_path="../reports/ie_screen_every_page")
+    # set_of_link = AutomationMethods().get_set_from_links_file(
+    #     file_name="links.csv")
+    # driver = AutomationMethods().get_ie_driver()
+    # AutomationMethods().get_screenshot_documentation_from_links(set_of_links=set_of_link,
+    #                                                             domain="",
+    #                                                             driver=driver,
+    #                                                             dictionary_path="../reports/ie_screen_every_page")
+    AutomationMethods().send_report_by_email()

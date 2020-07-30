@@ -65,8 +65,8 @@ class CaptchaTestCase(CaptchaTestCaseBase):
             self.home_page.assert_path_in_current_url(path=self.login_url)
             self.login_page.incorrect_login_as(username=self.email_1, password=self.password_1, submit=True)
             self.login_page.incorrect_login_as(username=self.email_1, password=self.password_2, submit=True)
-            self.login_page.login_as(username=self.email_1, password=self.password_1, submit=False)
-            self.login_page.incorrect_login_as(LoginPageLocators.CAPTCHA_SECTION)
+            self.login_page.incorrect_login_as(username=self.email_1, password=self.password_1, submit=False)
+            self.login_page.click_on(LoginPageLocators.CAPTCHA_SECTION)
 
         except:
             self.login_page.do_screenshot(name=sys._getframe(0).f_code.co_name + __file__[-10:-3] + "_")

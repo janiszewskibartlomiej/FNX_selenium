@@ -104,7 +104,7 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
 
     def test_TS01_TC009_successful_login_with_facebook(self):
         try:
-            self.login_page.click_on(by_loctor=LoginPageLocators.LOGIN_BY_FACEBOOK)
+            self.login_page.click_on_and_wait_for_a_new_page(by_loctor=LoginPageLocators.LOGIN_BY_FACEBOOK)
             self.login_page.enter_text(by_locator=LoginPageLocators.FACEBOOK_EMAIL, text=self.facebook_email)
             self.login_page.enter_text(by_locator=LoginPageLocators.FACEBOOK_PASSWORD,
                                        text=self.facebook_password)
