@@ -58,12 +58,12 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
         try:
             self.login_page.assert_path_in_current_url(path=self.login_path)
             self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, self.login_btn_text)
-            self.login_page.login_as(username=self.correct_email, password=self.incorrect_password_1, submit=True)
+            self.login_page.incorrect_login_as(username=self.correct_email, password=self.incorrect_password_1, submit=True)
             self.login_page.assert_path_in_current_url(path=self.login_path)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             assert self.login_page.element_is_visible(HomePageLocators.LOGIN_BUTTON) is True
             self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, self.login_btn_text)
-            self.login_page.login_as(username=self.correct_email, password=self.incorrect_password_2, submit=False)
+            self.login_page.incorrect_login_as(username=self.correct_email, password=self.incorrect_password_2, submit=False)
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, self.login_btn_text)
 
@@ -76,11 +76,11 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
             self.login_page.assert_path_in_current_url(path=self.login_path)
             self.login_page.login_as(username=self.incorrect_email_1,
                                      password=self.correct_password, submit=True)
-            self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
+            self.login_page.incorrect_login_as(HomePageLocators.ICON_ACCOUNT)
             assert self.login_page.get_element(HomePageLocators.LOGIN_BUTTON).text != self.logout_btn_text
             self.login_page.login_as(username=self.incorrect_email_2,
                                      password=self.correct_password, submit=False)
-            self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
+            self.login_page.incorrect_login_as(HomePageLocators.ICON_ACCOUNT)
             self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, self.login_btn_text)
 
         except:
@@ -91,7 +91,7 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
         try:
             self.login_page.login_as(username=' ' + self.correct_email, password=' ' + self.correct_password,
                                      submit=False)
-            self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
+            self.login_page.incorrect_login_as(HomePageLocators.ICON_ACCOUNT)
             self.login_page.assert_element_text(HomePageLocators.LOGIN_BUTTON, self.login_btn_text)
 
         except:
@@ -111,7 +111,7 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
 
     def test_TS01_TC008_failed_login_reverse_data_input(self):
         try:
-            self.login_page.login_as(username=self.correct_password, password=self.correct_email, submit=False)
+            self.login_page.incorrect_login_as(username=self.correct_password, password=self.correct_email, submit=False)
             assert self.login_btn_text in self.login_page.driver.page_source
             self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, self.login_btn_text)
 

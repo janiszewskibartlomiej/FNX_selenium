@@ -1,4 +1,5 @@
 import sys
+import time
 import unittest
 
 from selenium import webdriver
@@ -62,7 +63,7 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             assert self.login_page.element_is_visible(LoginPageLocators.LOGOUT_BUTTON) is True
             self.login_page.assert_element_text(LoginPageLocators.LOGOUT_BUTTON, self.logout_text)
-            self.login_page.click_on(LoginPageLocators.LOGOUT_BUTTON)
+            self.login_page.click_on_and_wait_for_a_new_page(LoginPageLocators.LOGOUT_BUTTON)
             assert self.login_page.element_is_visible(LoginPageLocators.SUBMIT_BTN) is True
             self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, self.login_text)
         except:
@@ -81,7 +82,7 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             self.login_page.assert_element_text(LoginPageLocators.LOGOUT_BUTTON, self.logout_text)
             self.assertTrue(self.logout_text in self.login_page.driver.page_source)
-            self.login_page.click_on(LoginPageLocators.LOGOUT_BUTTON)
+            self.login_page.click_on_and_wait_for_a_new_page(LoginPageLocators.LOGOUT_BUTTON)
             self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, self.login_text)
 
         except:
@@ -91,8 +92,7 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
     def test_TS01_TC003_successful_login_with_email_capitalizer(self):
         try:
             self.login_page.login_as(username=self.email.capitalize(), password=self.password, submit=False)
-            self.login_page.is_clickable(by_locator=HomePageLocators.ICON_ACCOUNT)
-            self.login_page.is_clickable(by_locator=HomePageLocators.ICON_ACCOUNT)
+            assert self.login_page.is_clickable(by_locator=HomePageLocators.ICON_ACCOUNT) is True
             self.login_page.click_on(HomePageLocators.ICON_ACCOUNT)
             drop_down = self.login_page.get_element(by_locator=LoginPageLocators.DROP_DOWN_SECTION)
             assert self.text_in_dropdown in drop_down.get_attribute("innerHTML")
@@ -108,7 +108,7 @@ class LoginSuccessTestCase(LoginSuccessTestCaseBase):
             self.login_page.enter_text(by_locator=LoginPageLocators.FACEBOOK_EMAIL, text=self.facebook_email)
             self.login_page.enter_text(by_locator=LoginPageLocators.FACEBOOK_PASSWORD,
                                        text=self.facebook_password)
-            self.login_page.click_on(by_loctor=LoginPageLocators.FACEBOOK_LOGIN_BTN)
+            self.login_page.click_on_and_wait_for_a_new_page(by_loctor=LoginPageLocators.FACEBOOK_LOGIN_BTN)
             self.login_page.click_on(by_loctor=LoginPageLocators.ICON_ACCOUNT)
             assert self.my_children_link_text in self.login_page.driver.page_source
             self.login_page.assert_element_text(by_locator=LoginPageLocators.MY_CHILDREN_LINK_TEXT,

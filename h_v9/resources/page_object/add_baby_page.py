@@ -1,5 +1,3 @@
-import time
-
 from selenium.webdriver.support.select import Select
 
 from .base_page import BasePage
@@ -29,7 +27,7 @@ class AddBabyPage(BasePage):
 
         month_select = Select(self.get_element(by_locator=month_locator))
         list_of_month = [i.text for i in month_select.options]
-        index = int(month) - 1
+        index = int(month)
         month_select.select_by_visible_text(list_of_month[index])
 
         day_select = Select(self.get_element(by_locator=day_locator))

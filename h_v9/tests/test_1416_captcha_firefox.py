@@ -69,9 +69,9 @@ class CaptchaTestCase(CaptchaTestCaseBase):
             self.home_page.click_on(HomePageLocators.ICON_ACCOUNT)
             self.home_page.click_on(HomePageLocators.LOGIN_BUTTON)
             self.home_page.assert_path_in_current_url(path=self.login_url)
-            self.login_page.login_as(username=self.email_1, password=self.password_1, submit=True)
-            self.login_page.login_as(username=self.email_1, password=self.password_2, submit=True)
-            self.login_page.login_as(username=self.email_1, password=self.password_1, submit=False)
+            self.login_page.incorrect_login_as(username=self.email_1, password=self.password_1, submit=True)
+            self.login_page.incorrect_login_as(username=self.email_1, password=self.password_2, submit=True)
+            self.login_page.incorrect_login_as(username=self.email_1, password=self.password_1, submit=False)
             self.login_page.click_on(LoginPageLocators.CAPTCHA_SECTION)
 
         except:
@@ -84,7 +84,7 @@ class CaptchaTestCase(CaptchaTestCaseBase):
             self.home_page.visit(self.login_url)
             self.home_page.assert_path_in_current_url(path=self.login_url)
             self.login_page = LoginPage(self.driver)
-            self.login_page.login_as(username=self.email_2, password=self.password_2, submit=True)
+            self.login_page.incorrect_login_as(username=self.email_2, password=self.password_2, submit=True)
             self.login_page.assert_path_in_current_url(path=self.validation_path)
             self.login_page.assert_element_text(LoginPageLocators.CAPTCHA_SECTION, element_text=self.captcha_text)
             assert self.captcha_text in self.login_page.driver.page_source
@@ -96,15 +96,15 @@ class CaptchaTestCase(CaptchaTestCaseBase):
 
     def test_TS02_TC003_captcha_is_visible_after_three_times_incorrect_login_total_quantity(self):
         try:
-            self.login_page.login_as(username=self.email_3, password=self.password_3)
-            self.login_page.login_as(username=self.email_2, password=self.password_3)
+            self.login_page.incorrect_login_as(username=self.email_3, password=self.password_3)
+            self.login_page.incorrect_login_as(username=self.email_2, password=self.password_3)
             self.login_page.assert_element_text(by_locator=LoginPageLocators.SUBMIT_BTN, element_text=self.login_text)
             self.login_page.login_as(username=self.correct_email, password=self.correct_password)
             self.login_page.click_on(by_loctor=HomePageLocators.ICON_ACCOUNT)
             self.login_page.assert_element_text(by_locator=LoginPageLocators.MY_PROFILE,
                                                 element_text=self.my_profile_text)
             self.login_page.click_on(by_loctor=LoginPageLocators.LOGOUT_BUTTON)
-            self.login_page.login_as(username=self.email_2, password=self.password_1)
+            self.login_page.incorrect_login_as(username=self.email_2, password=self.password_1)
             self.login_page.click_on(by_loctor=LoginPageLocators.CAPTCHA_SECTION)
 
         except:

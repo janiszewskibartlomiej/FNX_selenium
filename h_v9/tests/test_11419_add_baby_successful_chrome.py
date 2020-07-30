@@ -3,6 +3,8 @@ import unittest
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.expected_conditions import staleness_of
+from selenium.webdriver.support.wait import WebDriverWait
 
 from resources.automation_methods import AutomationMethods
 from resources.locators import AddBabyLocators, ListOfChildrenLocators
@@ -89,7 +91,7 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
                 by_locator=AddBabyLocators.SECTION_OF_REGISTRATION_GIFT) is True
             assert self.accept_text in self.add_baby_page.driver.page_source
 
-            self.add_baby_page.click_on(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
+            self.add_baby_page.click_on_and_wait_for_a_new_page(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
 
             self.add_baby_page.assert_path_in_current_url(path=self.children_list_url)
 
@@ -166,8 +168,9 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
 
             path = self.automation_methods.get_path_from_name(file_name="imiona_polskie.csv")
             name = self.add_baby_page.get_random_firstname_from_csv(path=path)
-            self.add_baby_page.enter_text_and_click_enter(by_locators=AddBabyLocators.FIRST_NAME_INPUT, text=name)
 
+            self.add_baby_page.enter_text_and_click_enter_and_wait_for_a_new_page(
+                by_locators=AddBabyLocators.FIRST_NAME_INPUT, text=name)
             self.add_baby_page.assert_path_in_current_url(path=self.children_list_url)
 
             assert self.add_baby_page.element_is_visible(by_locator=ListOfChildrenLocators.ALERT_ICON) is True
@@ -274,7 +277,7 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
                                           text=post_code_and_town_name["post_code"])
             self.add_baby_page.enter_text(by_locator=AddBabyLocators.PHONE_NUMBER, text=phone_nunber)
 
-            self.add_baby_page.click_on(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
+            self.add_baby_page.click_on_and_wait_for_a_new_page(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
 
             self.add_baby_page.assert_path_in_current_url(path=self.children_list_url)
 
@@ -358,7 +361,7 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
             assert self.add_baby_page.element_is_not_visible(
                 by_locator=AddBabyLocators.SECTION_OF_REGISTRATION_GIFT) is True
 
-            self.add_baby_page.click_on(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
+            self.add_baby_page.click_on_and_wait_for_a_new_page(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
 
             self.add_baby_page.assert_path_in_current_url(path=self.children_list_url)
 
@@ -480,7 +483,7 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
 
             self.add_baby_page.assert_element_text(by_locator=AddBabyLocators.NAME_IN_TRIANGLE, element_text=name)
 
-            self.add_baby_page.click_on(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
+            self.add_baby_page.click_on_and_wait_for_a_new_page(by_loctor=AddBabyLocators.ADD_BABY_BUTTON)
 
             self.add_baby_page.assert_path_in_current_url(path=self.children_list_url)
 
