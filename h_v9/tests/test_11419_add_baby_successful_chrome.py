@@ -21,7 +21,7 @@ class AddBabySuccessTestCaseBase(unittest.TestCase):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--ignore-certificate-errors')
         chrome_options.add_argument('--headless')
-        chrome_path = AutomationMethods().get_path_from_name(file_name="chromedriver.exe")
+        chrome_path = AutomationMethods().get_path_from_file_name(file_name="chromedriver.exe")
         self.driver = webdriver.Chrome(executable_path=chrome_path, options=chrome_options)
         self.driver.set_page_load_timeout(30)
         self.driver.maximize_window()
@@ -166,7 +166,7 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
                 by_locator=AddBabyLocators.SECTION_OF_REGISTRATION_GIFT) is True
             assert self.accept_text in self.add_baby_page.driver.page_source
 
-            path = self.automation_methods.get_path_from_name(file_name="imiona_polskie.csv")
+            path = self.automation_methods.get_path_from_file_name(file_name="imiona_polskie.csv")
             name = self.add_baby_page.get_random_firstname_from_csv(path=path)
 
             self.add_baby_page.enter_text_and_click_enter_and_wait_for_a_new_page(
@@ -248,7 +248,7 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
             future_year = future_date["year"]
             self.add_baby_page.select_date(day=future_day, month=future_month, year=future_year, pregnant=True)
 
-            path_of_name = self.automation_methods.get_path_from_name(file_name="imiona_polskie.csv")
+            path_of_name = self.automation_methods.get_path_from_file_name(file_name="imiona_polskie.csv")
             name = self.add_baby_page.get_random_firstname_from_csv(path=path_of_name)
             self.add_baby_page.enter_text(by_locator=AddBabyLocators.FIRST_NAME_INPUT, text=name)
 
@@ -261,10 +261,10 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
 
             self.add_baby_page.assert_element_text(by_locator=AddBabyLocators.NAME_IN_TRIANGLE, element_text=name)
 
-            path_of_post_code_and_town_name = self.automation_methods.get_path_from_name(file_name="kody.csv")
+            path_of_post_code_and_town_name = self.automation_methods.get_path_from_file_name(file_name="kody.csv")
             post_code_and_town_name = self.add_baby_page.get_random_post_code_and_town_name_from_csv(
                 path=path_of_post_code_and_town_name)
-            path_street = self.automation_methods.get_path_from_name(file_name="spis-ulic-w-gdansku.csv")
+            path_street = self.automation_methods.get_path_from_file_name(file_name="spis-ulic-w-gdansku.csv")
             street_name = self.add_baby_page.get_random_street_name_from_csv(path=path_street)
             street_number = self.add_baby_page.get_random_street_number()
             phone_nunber = self.add_baby_page.get_random_phone_number()
@@ -354,7 +354,7 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
             past_year = past_date["year"]
             self.add_baby_page.select_date(day=past_day, month=past_month, year=past_year, pregnant=False)
 
-            name_path = self.automation_methods.get_path_from_name(file_name="imiona_polskie.csv")
+            name_path = self.automation_methods.get_path_from_file_name(file_name="imiona_polskie.csv")
             name = self.add_baby_page.get_random_firstname_from_csv(path=name_path)
             self.add_baby_page.enter_text(by_locator=AddBabyLocators.FIRST_NAME_INPUT, text=name)
 
@@ -461,14 +461,14 @@ class AddBabySuccessTestCase(AddBabySuccessTestCaseBase):
             assert self.my_baby_club_url in gift_section.get_attribute('innerHTML')
             self.add_baby_page.click_on(by_loctor=AddBabyLocators.CHECKBOX_GIFT_TEXT)
 
-            name_path = self.automation_methods.get_path_from_name(file_name="imiona_polskie.csv")
+            name_path = self.automation_methods.get_path_from_file_name(file_name="imiona_polskie.csv")
             name = self.add_baby_page.get_random_firstname_from_csv(path=name_path)
             self.add_baby_page.enter_text(by_locator=AddBabyLocators.FIRST_NAME_INPUT, text=name)
 
-            post_code_and_town_name_path = self.automation_methods.get_path_from_name("kody.csv")
+            post_code_and_town_name_path = self.automation_methods.get_path_from_file_name("kody.csv")
             post_code_and_town_name = self.add_baby_page.get_random_post_code_and_town_name_from_csv(
                 path=post_code_and_town_name_path)
-            street_path = self.automation_methods.get_path_from_name(file_name="spis-ulic-w-gdansku.csv")
+            street_path = self.automation_methods.get_path_from_file_name(file_name="spis-ulic-w-gdansku.csv")
             street_name = self.add_baby_page.get_random_street_name_from_csv(path=street_path)
             street_number = self.add_baby_page.get_random_street_number()
             phone_nunber = self.add_baby_page.get_random_phone_number()

@@ -18,7 +18,7 @@ class LoginFailureTestCaseBase(unittest.TestCase):
     def setUp(self) -> None:
         caps = DesiredCapabilities.INTERNETEXPLORER
         caps['ignoreProtectedModeSettings'] = True
-        ie_path = AutomationMethods().get_path_from_name(file_name="IEDriverServer.exe")
+        ie_path = AutomationMethods().get_path_from_file_name(file_name="IEDriverServer.exe")
         self.driver = webdriver.Ie(executable_path=ie_path, capabilities=caps)
         self.driver.set_page_load_timeout(30)
         self.driver.maximize_window()

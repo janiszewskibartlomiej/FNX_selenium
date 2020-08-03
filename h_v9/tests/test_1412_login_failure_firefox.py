@@ -23,7 +23,7 @@ class LoginFailureTestCaseBase(unittest.TestCase):
         profile.set_preference('network.http.use-cache', False)
         firefox_options = webdriver.FirefoxOptions()
         firefox_options.add_argument('--headless')
-        firefox_path = AutomationMethods().get_path_from_name(file_name="geckodriver.exe")
+        firefox_path = AutomationMethods().get_path_from_file_name(file_name="geckodriver.exe")
         self.driver = webdriver.Firefox(executable_path=firefox_path, firefox_profile=profile,
                                         options=firefox_options)
         self.driver.set_page_load_timeout(30)

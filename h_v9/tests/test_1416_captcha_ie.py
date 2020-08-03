@@ -15,7 +15,7 @@ class CaptchaTestCaseBase(unittest.TestCase):
     def setUp(self) -> None:
         caps = DesiredCapabilities.INTERNETEXPLORER
         caps['ignoreProtectedModeSettings'] = True
-        ie_path = AutomationMethods().get_path_from_name(file_name="IEDriverServer.exe")
+        ie_path = AutomationMethods().get_path_from_file_name(file_name="IEDriverServer.exe")
         self.driver = webdriver.Ie(executable_path=ie_path, capabilities=caps)
         self.driver.set_page_load_timeout(30)
         # self.driver = webdriver.Remote(command_executor='http://192.168.8.103:5000/wd/hub', desired_capabilities= chrome_options.to_capabilities())

@@ -1,13 +1,19 @@
 import os
 import shutil
+import smtplib
 import sys
 import time
-import smtplib, ssl
+import zipfile
 from configparser import ConfigParser
 from datetime import date
-from email.mime.text import MIMEText
-from pathlib import Path
+from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
+from email.mime.application import MIMEApplication
+from email.mime.text import MIMEText
+from email.utils import formatdate
+from email import encoders
+from pathlib import Path
+
 import HtmlTestRunner
 import requests
 from selenium import webdriver
@@ -18,7 +24,8 @@ class AutomationMethods:
 
     def __init__(self):
         self.config = ConfigParser()
-        self.config_path = self.get_path_from_name(file_name="config.cfg")
+        self.config_path = self.get_path_from_file_name(file_name="config.cfg")
+        self.post = self.get_section_from_config(section_name="post")
 
     # template of date example >> 20200715
     def current_date_str_from_number(self) -> str:
@@ -68,7 +75,32 @@ class AutomationMethods:
                                                failfast=False, descriptions=True, buffer=False)
         return runner
 
-    def get_path_from_name(self, file_name: str) -> str:
+    def run_pytest_html_and_allure_report(self, by_name=None) -> list:
+        allure_json_path = self.get_path_from_dictionary_name(dictionary_name="allure_json")
+        allure_html_reports_path = self.get_path_from_dictionary_name(dictionary_name="HTML_reports")
+        reports_path = self.get_path_from_dictionary_name(dictionary_name="reports")
+
+        current_date = self.current_date_str_from_number()
+
+        pytest_html_report_path = f"{reports_path}\\{current_date}\\pytest_hipp9-staging_report_{int(time.time())}.html"
+        if by_name:
+            flag_and_name = f"-k {by_name}"
+        else:
+            flag_and_name = ""
+        os.system(
+            f"pytest {flag_and_name} --html={pytest_html_report_path} --self-contained-html --alluredir {allure_json_path} -v")
+        os.chdir(allure_html_reports_path)
+        os.system(f"allure generate {allure_json_path} --clean")
+        allure_index_path = allure_html_reports_path + "\\allure-report"
+        pytest_path = pytest_html_report_path.replace("\\", "/")
+        allure_path = allure_index_path.replace("\\", "/")
+        allure_zip = shutil.make_archive(base_name=allure_path, format="zip", root_dir=allure_html_reports_path)
+        print(allure_zip.title(), " is DONE !")
+        allure_zip_path = self.get_path_from_file_name(file_name="allure-report.zip")
+        allure_zip_path = allure_zip_path.replace("\\", "/")
+        return [pytest_path, allure_zip_path]
+
+    def get_path_from_file_name(self, file_name: str) -> str:
         path = sys.path[1]
         if path[-3:] == "zip":
             path = sys.path[0]
@@ -78,13 +110,23 @@ class AutomationMethods:
                     abs_path = os.path.join(root, file)
                     return abs_path
 
+    def get_path_from_dictionary_name(self, dictionary_name: str) -> str:
+        path = sys.path[1]
+        if path[-3:] == "zip":
+            path = sys.path[0]
+        for root, dirs, files in os.walk(path):
+            for dictionary in dirs:
+                if dictionary == dictionary_name:
+                    abs_path = os.path.join(root, dictionary)
+                    return abs_path
+
     def get_section_from_config(self, section_name: str) -> dict:
         self.config.read(self.config_path)
         data = self.config.items(section_name)
         return dict(data)
 
     def get_set_from_links_file(self, file_name: str) -> set:
-        file_path = self.get_path_from_name(file_name)
+        file_path = self.get_path_from_file_name(file_name)
         with open(file=file_path, mode="r", encoding="utf-8") as file:
             list_of_links = file.readlines()
             slice_links = set()
@@ -96,16 +138,34 @@ class AutomationMethods:
     def get_chrome_driver(self) -> webdriver:
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--headless')
-        chrome_path = self.get_path_from_name(file_name="chromedriver.exe")
+        chrome_path = self.get_path_from_file_name(file_name="chromedriver.exe")
         driver = webdriver.Chrome(executable_path=chrome_path, options=chrome_options)
+        driver.set_page_load_timeout(30)
         return driver
 
     def get_ie_driver(self) -> webdriver:
         caps = DesiredCapabilities.INTERNETEXPLORER
         caps['ignoreProtectedModeSettings'] = True
-        ie_path = AutomationMethods().get_path_from_name(file_name="IEDriverServer.exe")
+        ie_path = AutomationMethods().get_path_from_file_name(file_name="IEDriverServer.exe")
         driver = webdriver.Ie(executable_path=ie_path, capabilities=caps)
+        driver.set_page_load_timeout(30)
         return driver
+
+    def get_firefox_driver(self) -> webdriver:
+        profile = webdriver.FirefoxProfile()
+        profile.accept_untrusted_certs = True
+        profile.set_preference('browser.cache.disk.enable', False)
+        profile.set_preference('browser.cache.memory.enable', False)
+        profile.set_preference('browser.cache.offline.enable', False)
+        profile.set_preference('network.http.use-cache', False)
+        firefox_options = webdriver.FirefoxOptions()
+        firefox_options.add_argument('--headless')
+        firefox_path = AutomationMethods().get_path_from_file_name(file_name="geckodriver.exe")
+        driver = webdriver.Firefox(executable_path=firefox_path, firefox_profile=profile,
+                                        options=firefox_options)
+        driver.set_page_load_timeout(30)
+        return driver
+
 
     def get_screenshot(self, name: str, driver: webdriver, dictionary_path: str) -> None:
         original_size = driver.get_window_size()
@@ -140,41 +200,68 @@ class AutomationMethods:
                 incorrect_status_code[link] = status
         return incorrect_status_code
 
-    def send_report_by_email(self):
-        POST = self.get_section_from_config(section_name="post")
-        smtp_server = POST["smtp_server"]
+    def send_email(self, send_to=None, subject=None, message_conntent=None, files=None, use_tls=True):
+
+        if send_to is None:
+            send_to = self.post["receiver_email"]
+        else:
+            send_to = send_to
+
+        if subject is None:
+            subject = self.post["subject"]
+        else:
+            subject = subject
+
+        if message_conntent is None:
+            message_conntent = """
+            Cześć,\n 
+            W załączeniu przesyłam raport z wynikami testów. \n
+            Pozdro Bart
+            """
+        else:
+            message_conntent = message_conntent
+
+        if files is None:
+            files = []
+
+        sender_email = self.post["sender_email"]
+        smtp_server = self.post["smtp_server"]
         port = 25
-        sender = POST["sender_email"]
-        password = POST["password"]
-        receiver_email = POST["test"]
-        subject = POST["subject"]
+        password = self.post["password"]
 
         message = MIMEMultipart()
-        message["From"] = sender
-        message["To"] = receiver_email
+        message["From"] = sender_email
+        message["To"] = send_to
         message["Subject"] = subject
-        message_conntent = """
-        Cześć,\n 
-        W załączeniu przesyłam raport z wynikami testów. \n
-        Pozdro Bart
-        """
-        body = MIMEText(message_conntent)
-        message.attach(body)
-        text = message.as_string()
+        message["Date"] = formatdate(localtime=True)
+        message["Cc"] = sender_email
+        message.attach(MIMEText(message_conntent))
 
-        context = ssl.create_default_context()
+        if files:
+            for path in files:
+                with open(file=path, mode='rb') as file:
+                    base_name = os.path.basename(path)
+                    exe = path.split(".")[-1]
+                    instance = MIMEApplication(_data=file.read(), _subtype=exe, name=base_name)
+                    # instance = MIMEBase(_maintype="Application", _subtype=exe)
+                    # instance.set_payload(file.read())
+                    # encoders.encode_base64(instance)
+                    instance.add_header(_name='Content-Disposition', _value='attachment', filename=base_name)
+                    message.attach(instance)
+
         with smtplib.SMTP(host=smtp_server, port=port) as server:
-            server.login(user=sender, password=password)
-            server.sendmail(sender, receiver_email, text)
+            server.ehlo()
+            if use_tls:
+                server.starttls()
+            server.login(user=sender_email, password=password)
+            server.send_message(message)
 
 
 if __name__ == '__main__':
-    print(sys.path)
-    # set_of_link = AutomationMethods().get_set_from_links_file(
-    #     file_name="links.csv")
-    # driver = AutomationMethods().get_ie_driver()
-    # AutomationMethods().get_screenshot_documentation_from_links(set_of_links=set_of_link,
-    #                                                             domain="",
-    #                                                             driver=driver,
-    #                                                             dictionary_path="../reports/ie_screen_every_page")
-    AutomationMethods().send_report_by_email()
+    set_of_link = AutomationMethods().get_set_from_links_file(
+        file_name="links.csv")
+    driver = AutomationMethods().get_ie_driver()
+    AutomationMethods().get_screenshot_documentation_from_links(set_of_links=set_of_link,
+                                                                domain="",
+                                                                driver=driver,
+                                                                dictionary_path="../reports/ie_screen_every_page")
