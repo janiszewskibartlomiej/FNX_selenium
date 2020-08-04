@@ -17,20 +17,8 @@ class LoginSuccessTestCaseBase(unittest.TestCase):
         """
 
     def setUp(self) -> None:
-        profile = webdriver.FirefoxProfile()
-        profile.accept_untrusted_certs = True
-        profile.set_preference('browser.cache.disk.enable', False)
-        profile.set_preference('browser.cache.memory.enable', False)
-        profile.set_preference('browser.cache.offline.enable', False)
-        profile.set_preference('network.http.use-cache', False)
-        firefox_options = webdriver.FirefoxOptions()
-        firefox_options.add_argument('--headless')
-        firefox_path = AutomationMethods().get_path_from_file_name(file_name="geckodriver.exe")
-        self.driver = webdriver.Firefox(executable_path=firefox_path, firefox_profile=profile,
-                                        options=firefox_options)
-        self.driver.set_page_load_timeout(30)
+        self.driver = AutomationMethods().get_driver(browser_name="firefox", headless=False)
         # self.driver = webdriver.Remote(command_executor='http://192.168.8.103:5000/wd/hub', desired_capabilities= firefox_options.to_capabilities())
-        self.driver.maximize_window()
 
     def tearDown(self) -> None:
         self.driver.quit()

@@ -1,5 +1,5 @@
-## Selenium WebDriver with Python + Unittest + Pytest
+## Selenium WebDriver with Python + Unittest + Selenium
 
 ***
 
-i love coding of automation tests. 
+I love coding of automation tests. 

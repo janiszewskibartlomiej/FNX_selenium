@@ -15,6 +15,7 @@ class LoginPageLocators:
     FACEBOOK_EMAIL = (By.XPATH, "//input[@id='email']")
     FACEBOOK_PASSWORD = (By.XPATH, "//input[@id='pass']")
     FACEBOOK_LOGIN_BTN = (By.XPATH, "//button[@id='loginbutton']")
+    ALERT_MESSAGE = (By.XPATH, "//ul[@class='errorsMessages']")
 
 
 class HomePageLocators:

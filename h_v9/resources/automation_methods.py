@@ -135,37 +135,45 @@ class AutomationMethods:
                 slice_links.add(element)
         return slice_links
 
-    def get_chrome_driver(self) -> webdriver:
-        chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument('--headless')
-        chrome_path = self.get_path_from_file_name(file_name="chromedriver.exe")
-        driver = webdriver.Chrome(executable_path=chrome_path, options=chrome_options)
-        driver.set_page_load_timeout(30)
-        return driver
+    def get_driver(self, browser_name="chrome", headless=True):
+        if browser_name == "chrome":
+            chrome_options = webdriver.ChromeOptions()
+            if headless:
+                chrome_options.add_argument('--headless')
+            chrome_path = self.get_path_from_file_name(file_name="chromedriver.exe")
+            driver = webdriver.Chrome(executable_path=chrome_path, options=chrome_options)
+            driver.set_page_load_timeout(30)
+            driver.implicitly_wait(1)
+            driver.maximize_window()
+            return driver
 
-    def get_ie_driver(self) -> webdriver:
-        caps = DesiredCapabilities.INTERNETEXPLORER
-        caps['ignoreProtectedModeSettings'] = True
-        ie_path = AutomationMethods().get_path_from_file_name(file_name="IEDriverServer.exe")
-        driver = webdriver.Ie(executable_path=ie_path, capabilities=caps)
-        driver.set_page_load_timeout(30)
-        return driver
+        elif browser_name == "ie":
+            caps = DesiredCapabilities.INTERNETEXPLORER
+            caps['ignoreProtectedModeSettings'] = True
+            ie_path = AutomationMethods().get_path_from_file_name(file_name="IEDriverServer.exe")
+            driver = webdriver.Ie(executable_path=ie_path, capabilities=caps)
+            driver.set_page_load_timeout(30)
+            driver.implicitly_wait(1)
+            driver.maximize_window()
+            return driver
 
-    def get_firefox_driver(self) -> webdriver:
-        profile = webdriver.FirefoxProfile()
-        profile.accept_untrusted_certs = True
-        profile.set_preference('browser.cache.disk.enable', False)
-        profile.set_preference('browser.cache.memory.enable', False)
-        profile.set_preference('browser.cache.offline.enable', False)
-        profile.set_preference('network.http.use-cache', False)
-        firefox_options = webdriver.FirefoxOptions()
-        firefox_options.add_argument('--headless')
-        firefox_path = AutomationMethods().get_path_from_file_name(file_name="geckodriver.exe")
-        driver = webdriver.Firefox(executable_path=firefox_path, firefox_profile=profile,
-                                        options=firefox_options)
-        driver.set_page_load_timeout(30)
-        return driver
-
+        elif browser_name == "firefox":
+            profile = webdriver.FirefoxProfile()
+            profile.accept_untrusted_certs = True
+            profile.set_preference('browser.cache.disk.enable', False)
+            profile.set_preference('browser.cache.memory.enable', False)
+            profile.set_preference('browser.cache.offline.enable', False)
+            profile.set_preference('network.http.use-cache', False)
+            firefox_options = webdriver.FirefoxOptions()
+            if headless:
+                firefox_options.add_argument('--headless')
+            firefox_path = AutomationMethods().get_path_from_file_name(file_name="geckodriver.exe")
+            driver = webdriver.Firefox(executable_path=firefox_path, firefox_profile=profile,
+                                       options=firefox_options)
+            driver.set_page_load_timeout(30)
+            driver.implicitly_wait(1)
+            driver.maximize_window()
+            return driver
 
     def get_screenshot(self, name: str, driver: webdriver, dictionary_path: str) -> None:
         original_size = driver.get_window_size()
@@ -250,17 +258,18 @@ class AutomationMethods:
                     message.attach(instance)
 
         with smtplib.SMTP(host=smtp_server, port=port) as server:
-            server.ehlo()
+            server.ehlo_or_helo_if_needed()
             if use_tls:
                 server.starttls()
+                server.ehlo_or_helo_if_needed()
             server.login(user=sender_email, password=password)
             server.send_message(message)
 
 
 if __name__ == '__main__':
     set_of_link = AutomationMethods().get_set_from_links_file(
-        file_name="links.csv")
-    driver = AutomationMethods().get_ie_driver()
+        file_name="files/links.csv")
+    driver = AutomationMethods().get_driver(browser_name="ie")
     AutomationMethods().get_screenshot_documentation_from_links(set_of_links=set_of_link,
                                                                 domain="",
                                                                 driver=driver,

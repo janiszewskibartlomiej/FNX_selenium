@@ -35,10 +35,16 @@ class BasePage:
         web_element.click()
         while not self.page_is_loading():
             continue
+        time.sleep(1)
 
     def assert_element_text(self, by_locator: tuple, element_text: str):
         web_element = WebDriverWait(self.driver, 100).until(EC.text_to_be_present_in_element(by_locator, element_text))
         assert web_element is True
+
+    def assert_element_text_in_page_source(self, element_text: str):
+        while not self.page_is_loading():
+            continue
+        assert element_text in self.driver.page_source
 
     def assert_element_color_hex(self, by_locator: tuple, color_hex: str):
         web_element = WebDriverWait(self.driver, 100).until(EC.visibility_of_element_located(by_locator))
@@ -67,12 +73,11 @@ class BasePage:
         WebDriverWait(self.driver, 100).until(staleness_of(old_page))
 
     def page_is_loading(self):
-        while True:
-            page_status = self.driver.execute_script("return document.readyState")
-            if page_status == "complete":
-                return True
-            else:
-                yield False
+        page_status = self.driver.execute_script("return document.readyState")
+        if page_status == "complete":
+            return True
+        else:
+            yield False
 
     def is_clickable(self, by_locator: tuple) -> bool:
         element = WebDriverWait(self.driver, 100).until(EC.element_to_be_clickable(by_locator))
@@ -188,6 +193,8 @@ class BasePage:
         return str_next_month
 
     def do_screenshot(self, name: str) -> None:
+        while not self.page_is_loading():
+            continue
         original_size = self.driver.get_window_size()
         required_width = self.driver.execute_script('return document.body.parentNode.scrollWidth')
         required_height = self.driver.execute_script('return document.body.parentNode.scrollHeight')
@@ -203,3 +210,5 @@ class BasePage:
         path = f"reports/{current_date_template}/screenshot_{name}{current_time}.png"
         self.driver.get_screenshot_as_file(path)
         self.driver.set_window_size(original_size['width'], original_size['height'])
+
+

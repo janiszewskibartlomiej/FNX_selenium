@@ -1,10 +1,10 @@
 import unittest
 
 from resources.automation_methods import AutomationMethods
-from tests.test_11419_add_baby_successful_firefox import AddBabySuccessTestCase as AddBabySuccessFireFox
-from tests.test_1412_login_failure_firefox import LoginFailureTestCase as LoginFailureFireFox
-from tests.test_1412_login_successful_firefox import LoginSuccessTestCase as  LoginSuccessFireFox
-from tests.test_1416_captcha_firefox import CaptchaTestCase as CaptchaFireFox
+from test_cases.test_11419_add_baby_successful_firefox import AddBabySuccessTestCase as AddBabySuccessFireFox
+from test_cases.test_1412_login_failure_firefox import LoginFailureTestCase as LoginFailureFireFox
+from test_cases.test_1412_login_successful_firefox import LoginSuccessTestCase as  LoginSuccessFireFox
+from test_cases.test_1416_captcha_firefox import CaptchaTestCase as CaptchaFireFox
 
 
 def suite():

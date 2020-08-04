@@ -16,12 +16,7 @@ class LoginFailureTestCaseBase(unittest.TestCase):
     """
 
     def setUp(self) -> None:
-        caps = DesiredCapabilities.INTERNETEXPLORER
-        caps['ignoreProtectedModeSettings'] = True
-        ie_path = AutomationMethods().get_path_from_file_name(file_name="IEDriverServer.exe")
-        self.driver = webdriver.Ie(executable_path=ie_path, capabilities=caps)
-        self.driver.set_page_load_timeout(30)
-        self.driver.maximize_window()
+        self.driver = AutomationMethods().get_driver(browser_name="ie")
 
     def tearDown(self) -> None:
         self.driver.quit()
@@ -104,7 +99,7 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
     def test_TS01_TC008_failed_login_reverse_data_input(self):
         try:
             self.login_page.incorrect_login_as(username=self.correct_password, password=self.correct_email, submit=False)
-            assert self.login_btn_text in self.login_page.driver.page_source
+            self.login_page.assert_element_text_in_page_source(element_text=self.login_btn_text)
             self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, self.login_btn_text)
 
         except:

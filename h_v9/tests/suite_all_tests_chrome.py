@@ -1,10 +1,10 @@
 import unittest
 
 from resources.automation_methods import AutomationMethods
-from tests.test_11419_add_baby_successful_chrome import AddBabySuccessTestCase
-from tests.test_1412_login_failure_chrome import LoginFailureTestCase
-from tests.test_1412_login_successful_chrome import LoginSuccessTestCase
-from tests.test_1416_captcha_chrome import CaptchaTestCase as CaptchaChrome
+from test_cases.test_11419_add_baby_successful_chrome import AddBabySuccessTestCase
+from test_cases.test_1412_login_failure_chrome import LoginFailureTestCase
+from test_cases.test_1412_login_successful_chrome import LoginSuccessTestCase
+from test_cases.test_1416_captcha_chrome import CaptchaTestCase as CaptchaChrome
 
 
 # root_path = os.path.abspath("../resources")

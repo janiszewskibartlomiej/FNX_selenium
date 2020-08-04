@@ -17,13 +17,7 @@ class LoginSuccessTestCaseBase(unittest.TestCase):
         """
 
     def setUp(self) -> None:
-        chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument('--ignore-certificate-errors')
-        chrome_options.add_argument('--headless')
-        chrome_path = AutomationMethods().get_path_from_file_name(file_name="chromedriver.exe")
-        self.driver = webdriver.Chrome(executable_path=chrome_path, options=chrome_options)
-        self.driver.set_page_load_timeout(30)
-        self.driver.maximize_window()
+        self.driver = AutomationMethods().get_driver(browser_name="chrome")
 
     def tearDown(self) -> None:
         self.driver.quit()

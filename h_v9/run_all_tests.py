@@ -1,12 +1,13 @@
 import unittest
 
-import tests.suite_all_tests_chrome as suiteAllTestsChrome
-import tests.suite_all_tests_firefox as suiteAllTestsFireFox
-import tests.suite_all_tests_ie as suiteAllTests_IE
+import test_cases.suite_all_tests_chrome as suiteAllTestsChrome
+import test_cases.suite_all_tests_firefox as suiteAllTestsFireFox
+import test_cases.suite_all_tests_ie as suiteAllTests_IE
 from resources.automation_methods import AutomationMethods
 
 if __name__ == '__main__':
     automation_of_tests = AutomationMethods()
+    automation_of_tests.removing_directories_in_reports_by_number_of_day(n_day=7)
 
     suite = unittest.TestSuite()
     suite_chrome = suiteAllTestsChrome.suite()

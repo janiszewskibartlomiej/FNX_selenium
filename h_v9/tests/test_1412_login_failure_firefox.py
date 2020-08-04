@@ -15,20 +15,8 @@ class LoginFailureTestCaseBase(unittest.TestCase):
     """
 
     def setUp(self) -> None:
-        profile = webdriver.FirefoxProfile()
-        profile.accept_untrusted_certs = True
-        profile.set_preference('browser.cache.disk.enable', False)
-        profile.set_preference('browser.cache.memory.enable', False)
-        profile.set_preference('browser.cache.offline.enable', False)
-        profile.set_preference('network.http.use-cache', False)
-        firefox_options = webdriver.FirefoxOptions()
-        firefox_options.add_argument('--headless')
-        firefox_path = AutomationMethods().get_path_from_file_name(file_name="geckodriver.exe")
-        self.driver = webdriver.Firefox(executable_path=firefox_path, firefox_profile=profile,
-                                        options=firefox_options)
-        self.driver.set_page_load_timeout(30)
+        self.driver = AutomationMethods().get_driver(browser_name="firefox", headless=True)
         # self.driver = webdriver.Remote(command_executor='http://192.168.8.103:5000/wd/hub', desired_capabilities= firefox_options.to_capabilities())
-        self.driver.maximize_window()
 
     def tearDown(self) -> None:
         self.driver.quit()
@@ -111,7 +99,7 @@ class LoginFailureTestCase(LoginFailureTestCaseBase):
     def test_TS01_TC008_failed_login_reverse_data_input(self):
         try:
             self.login_page.incorrect_login_as(username=self.correct_password, password=self.correct_email, submit=False)
-            assert self.login_btn_text in self.login_page.driver.page_source
+            self.login_page.assert_element_text_in_page_source(element_text=self.login_btn_text)
             self.login_page.assert_element_text(LoginPageLocators.SUBMIT_BTN, self.login_btn_text)
 
         except:

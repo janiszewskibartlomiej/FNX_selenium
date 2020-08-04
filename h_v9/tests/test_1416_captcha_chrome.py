@@ -12,14 +12,8 @@ from resources.page_object.login_page import LoginPage
 class CaptchaTestCaseBase(unittest.TestCase):
 
     def setUp(self) -> None:
-        chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument('--ignore-certificate-errors')
-        chrome_options.add_argument('--headless')
-        chrome_path = AutomationMethods().get_path_from_file_name(file_name="chromedriver.exe")
-        self.driver = webdriver.Chrome(executable_path=chrome_path, options=chrome_options)
-        self.driver.set_page_load_timeout(30)
+        self.driver = AutomationMethods().get_driver(browser_name="chrome")
         # self.driver = webdriver.Remote(command_executor='http://192.168.8.103:5000/wd/hub', desired_capabilities= chrome_options.to_capabilities())
-        self.driver.maximize_window()
 
     def tearDown(self) -> None:
         self.driver.quit()

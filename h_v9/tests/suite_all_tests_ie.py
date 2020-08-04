@@ -1,10 +1,10 @@
 import unittest
 
 from resources.automation_methods import AutomationMethods
-from tests.test_11419_add_baby_successful_ie import AddBabySuccessTestCase as AddBabySuccessIE
-from tests.test_1412_login_failure_ie import LoginFailureTestCase as LoginFailureIE
-from tests.test_1412_login_successful_ie import LoginSuccessTestCase as LoginSuccessIE
-from tests.test_1416_captcha_ie import CaptchaTestCase as CaptchaIE
+from test_cases.test_11419_add_baby_successful_ie import AddBabySuccessTestCase as AddBabySuccessIE
+from test_cases.test_1412_login_failure_ie import LoginFailureTestCase as LoginFailureIE
+from test_cases.test_1412_login_successful_ie import LoginSuccessTestCase as LoginSuccessIE
+from test_cases.test_1416_captcha_ie import CaptchaTestCase as CaptchaIE
 
 
 def suite():

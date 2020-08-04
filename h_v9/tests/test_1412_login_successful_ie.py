@@ -19,13 +19,7 @@ class LoginSuccessTestCaseBase(unittest.TestCase):
         """
 
     def setUp(self) -> None:
-        caps = DesiredCapabilities.INTERNETEXPLORER
-        caps['ignoreProtectedModeSettings'] = True
-        caps['ie.ensureCleanSession'] = True
-        ie_path = AutomationMethods().get_path_from_file_name(file_name="IEDriverServer.exe")
-        self.driver = webdriver.Ie(executable_path=ie_path, capabilities=caps)
-        self.driver.set_page_load_timeout(30)
-        self.driver.maximize_window()
+        self.driver = AutomationMethods().get_driver(browser_name="ie")
 
     def tearDown(self) -> None:
         self.driver.quit()
